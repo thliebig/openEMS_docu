@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt,
+		      12pt,
+		      DIV=12,
+		      parskip=half,
+		      oneside]{scrbook}
+
+\frenchspacing
+\pagestyle{myheadings}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[intlimits]{amsmath} 
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{esint}
+\usepackage[dvips]{graphicx}
+\usepackage{epsfig}
+\usepackage{psfrag}
+\usepackage[numbers,square]{natbib}
+\bibliographystyle{unsrtdin}
+\usepackage[pdfborder={0 0 0}]{hyperref} % Try to comment this out, if compiling crashes.
+\usepackage{color} 
+\definecolor{gray}{rgb}{.6,.6,.6}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{brightgray}{rgb}{.9,.9,.9}
+\definecolor{darkblue}{rgb}{0,0,.8}
+\definecolor{darkgreen}{rgb}{0,.7,0}
+\definecolor{brightyellow}{rgb}{1,1,.5}
+
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\usepackage{colortbl}
+
+\frenchspacing
+\newcommand{\clearcustom}{\cleardoublepage} 
+
+\usepackage{listings} 
+\lstset{
+  language=matlab,
+  basicstyle=\ttfamily,
+  numbersep=8pt, 
+  numbers=left,
+  numberstyle=\tiny,
+  numberbychapter=true,
+  frame=lRtb,
+  rulecolor=\color{black},
+  tabsize=4,
+  showstringspaces=false,
+%   stringstyle=\color{red},
+%   commentstyle=\color{gray},
+%   identifierstyle=\color{darkblue},
+%   keywordstyle=\color{darkgreen},
+  captionpos=b
+} 
+
+\DeclareMathOperator*{\rot}{rot}
+\DeclareMathOperator*{\divergence}{div}
+\DeclareMathOperator*{\grad}{grad}
+\newcommand{\corresponds}{\stackrel{\scriptscriptstyle\wedge}{=}}
+\newcommand{\defineequal}{\stackrel{!}{=}}
+\newcommand{\defineequivalent}{\stackrel{!}{\Leftrightarrow}}
+
+\newcommand{\iconbox}[2]{%
+\fbox{
+\begin{minipage}{0.1\textwidth}
+ \includegraphics[width=\textwidth]{#1}
+\end{minipage}
+\begin{minipage}{0.9\textwidth}
+#2
+\end{minipage}}}
+
+\newcommand{\warning}[1]{\iconbox{svg/Warning.eps}{#1}}
+\newcommand{\info}[1]{\iconbox{svg/Info.eps}{#1}}
+\newcommand{\incomplete}{\warning{\textbf{Warning: This chapter or section is incomplete.}\\
+Visit \url{http://openEMS.de} how to contribute and enhance this User Manual.}}
