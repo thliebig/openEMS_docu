@@ -39,21 +39,31 @@
 
 \usepackage{listings} 
 \lstset{
-  language=matlab,
-  basicstyle=\ttfamily,
-  numbersep=8pt, 
+  language=matlab,             	% the language of the code
+  basicstyle=\ttfamily,		% the size of the fonts that are used for the code \footnotesize,          
+  numbersep=5pt, 		% where to put the line-numbers % how far the line-numbers are from the code
   numbers=left,
-  numberstyle=\tiny,
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers,
   numberbychapter=true,
-  frame=lRtb,
-  rulecolor=\color{black},
-  tabsize=4,
-  showstringspaces=false,
-%   stringstyle=\color{red},
-%   commentstyle=\color{gray},
+  frame=lRtb,			% adds a frame around the code.  single
+  rulecolor=\color{darkblue}, 	% if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,			% sets default tabsize to 2 spaces
+  showstringspaces=false,	% underline spaces within strings      
+%    stringstyle=\color{red},
+    commentstyle=\color{gray},
 %   identifierstyle=\color{darkblue},
 %   keywordstyle=\color{darkgreen},
-  captionpos=b
+  captionpos=b,          	% sets the caption-position to bottom
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores                                  
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=true,        % sets if automatic breaks should only happen at whitespace
+%   title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+%   escapeinside={\%*}{*)},            % if you want to add a comment within your code
+%   morekeywords={*,...}               % if you want to add more keywords to the set
 } 
 
 \DeclareMathOperator*{\rot}{rot}
@@ -80,3 +90,9 @@ Visit \url{http://openEMS.de} how to contribute and enhance this User Manual.}}
 \usepackage{bm}
 \usepackage{float}
 \usepackage{subfig}
+
+\newenvironment{myindentpar}% INDENT. 
+     {\begin{list}{}{\setlength{\leftmargin}{1cm}}%
+              \item[]% just blank 
+     }
+     {\end{list}}
