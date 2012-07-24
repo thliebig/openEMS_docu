@@ -2,11 +2,74 @@
 Introduction to openEMS ...
 
 \section{Installation}
-This is a paragraph about the proper installation of openEMS ...
+This is a paragraph about the proper installation of openEMS ...\\
+OpenEMS can be installed to the following operating systems:
+    \begin{myindentpar}
+	Linux\\
+	Windows\\
+	Mac
+    \end{myindentpar}
+You can also find the content of this section online with this links:\\
+\href{http://openems.de/index.php/OpenEMS#Installation}{\url{http://openems.de/index.php/OpenEMS\#Installation}}
+
 
 \subsection{Linux: Using binary packages}
 
 \subsection{Linux: From source code}
+    This is the recommended approach for all who want to do productive work with openEMS.\\
+    This instructions assume that you will install openEMS to a directory $\sim$/openEMS
+  \begin{itemize}
+    \item Press butons "Ctrl"+"Alt"+"T" at the same time to open a terminal.
+    Then you can copy the following codes into the command line and press button "Enter" to excute them consequently to install openEMS.
+    \item Install all necessary packages and libraries: git, qt4-qmake, tinyxml, hdf5 and boost. \\
+	For example on Ubuntu 11.10:\\
+      \begin{lstlisting}[style=shell]
+sudo apt-get install build-essential git qt4-qmake libhdf5-serial-dev libvtk5-dev libboost-all-dev libtinyxml-dev
+      \end{lstlisting}
+Then you might be requested to input password of root.
+      \begin{lstlisting}[style=shell]
+# for the Qt Interface (AppCSXCAD):
+sudo apt-get install libqt4-dev libvtk5-qt4-dev
+      \end{lstlisting}
+    \item Create or change to a directory where you want openEMS to be installed (e.g. $\sim$/openEMS):
+      \begin{lstlisting}[style=shell]
+mkdir -p ~/openEMS
+cd ~/openEMS
+      \end{lstlisting}
+\end{itemize}
+\warning{If the directory has existed and you want to reinstall openEMS, you could delete the directory at first with the following command. But please be sure that you have backuped your own data in the directory before you delete it.}\\
+\begin{itemize}
+      \begin{lstlisting}[style=shell]
+# delete the existing old directory. Be careful before you do this if you have your own data or code in it!!
+rm -r ~/openEMS
+      \end{lstlisting}
+    \item Get the source code and repositories using git:
+      \begin{lstlisting}[style=shell]
+for mod in fparser CSXCAD QCSXCAD AppCSXCAD openEMS; do
+echo "Clone $mod from openEMS.de"
+git clone git://openEMS.de/$mod.git
+done
+      \end{lstlisting}
+    \item Update sources and rebuild openEMS using the "update\_openEMS.sh" script:
+      \begin{lstlisting}[style=shell]
+wget http://openems.de/download/linux/update_openEMS.sh
+chmod +x update_openEMS.sh
+./update_openEMS.sh       
+      \end{lstlisting}
+
+   \item  Add the openEMS path to matlab (maybe copy the following code into a  file named "startup.m" then save the file into your home directory ~/):
+      \begin{lstlisting}
+addpath('~/openEMS/openEMS/matlab');
+addpath('~/openEMS/CSXCAD/matlab');
+      \end{lstlisting}
+    \item For future updates:\\
+	To update to a later version of openEMS just do:
+	\begin{lstlisting}
+cd ~/openEMS
+./update_openEMS.sh
+	\end{lstlisting}  
+It is recommended that openEMS is to be updated  in time.
+\end{itemize}
 
 \subsection{Windows}
 
