@@ -1,15 +1,120 @@
-\chapter{FDTD Parameter Setup}
-This is a chapter about the proper setup of all necessary FDTD parameter.
+\chapter{FDTD Parameter Setup}\label{chap:FDTD Parameter Setup}
+This is a chapter about the proper setup of all necessary FDTD parameter.\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
 
-\section{Excitation signal setup}
-This is a paragraph about the FDTD excitation signal setup
+\texttt{FDTD}    is a structure in Matlab to describe some parameters of the algorithm FDTD. It contains 3 fields: \phantomsection \label{para:FDTD} %\hyperref[para:FDTD]{\texttt{FDTD}}
+       \begin{myindentpar}
+	      \hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} \\ 
+	      \hyperref[para:Excitation]{\texttt{Excitation}}  \\ 
+	      \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}}
+       \end{myindentpar}
+All fields and  their elements  are showed in the figure \ref{fig:Structure FDTD}
 
-    \subsection{Gaussian pulse}
 
-    \subsection{Sinousoidal signal}
+  \def\svgwidth{0.8\textwidth}
+   \input{svg/FDTD_structure.eps_tex} % this file is from inkscape. saved as with option  omit text and in latex. it has been modified for links.
 
-    \subsection{Other excitation signals}
+Most of these parameters should be assigned with respective functions in MATLAB before a simulation is run in OpenEMS.  Firstly the structure \hyperref[para:FDTD]{\texttt{FDTD}} should be initiated(see section \ref{sec:FDTD_ATTRIBUTE}), then  \hyperref[para:Excitation]{\texttt{Excitation}} (see section \ref{sec:FDTD_Excitation}) and \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}} (see section \ref{sec:BC}) are set up in the structure. %\hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} has other advanced  parameters of \hyperref[para:FDTD]{\texttt{FDTD}}, such as the type of the coordinates system,  criteria for ending the simulation and so on.
 
+\section{Attributes of FDTD} \label{sec:FDTD_ATTRIBUTE}
+\phantomsection \label{para:FDTD_ATTRIBUTE}
+This section shows how to initiate a \hyperref[para:FDTD]{\texttt{FDTD}} with some given attributes. 
+
+\section{Excitation signal setup} \label{sec:FDTD_Excitation}
+An excitation  is a source of the  electric magnetic field. It can be  an electrical field intensity E or an magnetic field intensity H. And  in OpenEMS, each excitation can be considered as a composition  of two parts -- a signal of  time or  frequency as well as  a distribution or an application in the space. The first part is called excitation signal here. And in Matlab it is defined as one field of the structure \hyperref[para:FDTD]{\texttt{FDTD}}, which is named as \texttt{Excitation}. \phantomsection \label{para:Excitation} \\%\hyperref[para:Excitation]{\texttt{Excitation}} 
+
+\hyperref[para:Excitation]{\texttt{Excitation}} might include the following  subfields\footnote{It depends on the type of the signal}: 
+       \begin{myindentpar}
+	      \texttt{FDTD.Excitation.ATTRIBUTE.Type} \\ 
+	      \texttt{FDTD.Excitation.ATTRIBUTE.f0} \\ 
+	      \texttt{FDTD.Excitation.ATTRIBUTE.fc} \\
+              \texttt{FDTD.Excitation.ATTRIBUTE.Function}
+       \end{myindentpar}
+
+ Following subsections are  about how to set up an \hyperref[para:Excitation]{\texttt{Excitation}} as a Gaussian pulse, a sinousoidal signal or other customs excitation signals.\footnote{How to apply the \hyperref[para:Excitation]{\texttt{Excitation}}  to any given space(meshes or grids) is showed in the section \ref{sect-Primitives}.} See the functions for setting the excitation signals:
+       \begin{myindentpar}
+	      \hyperref[func:SetGaussExcite]{\texttt{SetGaussExcite(FDTD,f0,fc)}} \\ 
+	      \hyperref[func:SetSinusExcite]{\texttt{SetSinusExcite(FDTD,f0)}}\\ 
+	      \hyperref[func:SetCustomExcite]{\texttt{SetCustomExcite(FDTD,f0,funcStr)}}
+       \end{myindentpar}
+The excitation signals in MATLAB are all defined as  functions of frequency, since signals in time domain or frequency domain can be transformed into each other.   More Details are showed in the follwing subsections \ref{subsec:Gaussian pulse}, \ref{subsec:Sinousoidal signal} and \ref{subsec:Other excitation signals}
+
+\info{One  simulation has one excitation signal. 
+And if many excitation signals are involved in a case, superposition prinziple can be utilized to  attain the equivalent simulation.\\
+\texttt{FDTD.ATTRIBUTE.f\_max} will be also assigned  at the same time while using these functions.}
+
+    \subsection{Gaussian pulse} \label{subsec:Gaussian pulse}
+If $f_0$ is a modulated frequency and $f_c$ is a bandwidth between  two cutoff frequencies $f_0-f_c/2$ and  $f_0+f_c/2$ at -5dB, then a time domain gaussian signal (a pure gaussian signal modulated by a cosinusoidal signal)
+\begin{equation}\label{equ:GussianSignal_time}
+ f(t)=cos[2\pi f_0(t-t_0)]e^{-{\big(\frac{t-t_0}{\frac{t0}{3}}\big)}^2}, \quad \text{for } t>0 \text{ and }t_0=\frac{9}{2\pi f_c}
+\end{equation}
+can be expressed  in frequency domain as
+\begin{equation}\label{equ:GussianSignal_freq}
+F(f)=\frac{3}{4\sqrt{\pi}f_c}e^{-j\frac{9f}{f_c}}e^{-{\big(\frac{f-f_0}{\frac{2f_c}{3}}\big)}^2},\quad \text{for } f>0 .
+\end{equation}
+
+Figure \ref{fig:GaussInpulseTheory} shows an instance of Gaussian inpulse from expressions \ref{equ:GussianSignal_time} and \ref{equ:GussianSignal_freq}. 
+    \begin{figure}[ht]
+	      \centering
+	      \subfloat[In time domain]{\includegraphics[width=0.45\textwidth]{svg/GaussInpulseTime.eps}}\qquad
+	      \subfloat[In frequency domain]{\includegraphics[width=0.45\textwidth]{svg/GaussInpulseFreq.eps}}\qquad 
+	      \subfloat[In dB]{\includegraphics[width=0.45\textwidth]{svg/GaussInpulseFreqdB.eps}}\qquad 
+	      \caption[Gausian inpulse signal]{An instance of Gausian inpulse signal with $f_0=10GHz \quad f_c=6GHz$}
+	      \label{fig:GaussInpulseTheory}
+    \end{figure}
+According to the expression \ref{equ:GussianSignal_freq}, a Gaussian signal can be defined with function \hyperref[func:SetGaussExcite]{\texttt{SetGaussExcite(FDTD,f0,fc)}}.
+
+\textcolor{blue}{\begin{large}\textbf{SetGaussExcite}	\end{large}}\phantomsection \label{func:SetGaussExcite}\\
+	  Set the signal of the excitation as a Gaussian function.
+
+\textcolor{blue}{\begin{large}Syntax:\end{large}}
+ \begin{lstlisting}
+FDTD = SetGaussExcite(FDTD,f0,fc);
+ \end{lstlisting}
+
+\textcolor{blue}{\begin{large}Definition:\end{large}}\\
+      This function update the structure \hyperref[para:FDTD]{\texttt{FDTD}} with the expression \ref{equ:GussianSignal_freq}. 
+
+\textcolor{blue}{\begin{large}Description:\end{large}}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% RETURN VALUE
+	      Return value 
+	\begin{myindentpar}
+      Return value of this function is an updated structure \hyperref[para:FDTD]{\texttt{FDTD}} with assignments to the field \hyperref[para:FDTD]{\texttt{FDTD}}.\hyperref[para:Excitation]{\texttt{Excitation}}. And \texttt{FDTD.ATTRIBUTE.f\_max}=\hyperref[para:f0]{\texttt{f0}}+\hyperref[para:fc]{\texttt{fc}}.
+      \end{myindentpar}
+    %%%%%%%%%%%%%% warning
+	      \warning{ Please don't neglect the left expression '\texttt{FDTD}=' for the assignment, otherwise \texttt{FDTD} will not be updated.}\\ \\
+% 	\textcolor{blue}{\begin{large}Definitions:\end{large}}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
+	\hyperref[para:FDTD]{\texttt{FDTD}} 
+	    \begin{myindentpar}
+		A structure in MATLAB interface. See \hyperref[para:FDTD]{\texttt{FDTD}}.
+	    \end{myindentpar}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% f0
+	\texttt{f0}  \phantomsection \label{para:f0} %\hyperref[para:f0]{\texttt{f0}} 
+	    \begin{myindentpar}
+		\hyperref[para:f0]{\texttt{f0}}  is the frequency of the modulating cosinusoidal signal. It's also the central frequency of the gaussian signal. At this frequency the signal has the highest amplitude or energy.
+	    \end{myindentpar}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% fc
+	\texttt{fc}  \phantomsection \label{para:fc} %\hyperref[para:fc]{\texttt{fc}} 
+	    \begin{myindentpar}
+		\hyperref[para:fc]{\texttt{fc}} determins the variance of the signal. It is a central bandwidth in which  the signal is greater then about -5dB. See figure \ref{fig:GaussInpulseTheory}.
+	    \end{myindentpar}
+\begin{myindentpar}
+         \end{myindentpar}
+\warning{Too small \hyperref[para:fc]{\texttt{fc}} can lead to a timeconsuming simulation. }
+%%%%%%%%%%%%%%%%%%%%% Examples.	  
+	\textcolor{blue}{\begin{large}Examples:\end{large}}\\
+\begin{itemize}
+\item
+\end{itemize}
+
+    \subsection{Sinousoidal signal}\label{subsec:Sinousoidal signal}
+\textcolor{blue}{\begin{large}\textbf{SetSinusExcite}	\end{large}}\phantomsection \label{func:SetSinusExcite}\\
+	  Set signal of excitation as a sinusoidal function.
+
+    \subsection{Other excitation signals}\label{subsec:Other excitation signals}
+\textcolor{blue}{\begin{large}\textbf{SetCustomExcite}	\end{large}}\phantomsection \label{func:SetCustomExcite}\\
+	  Set signal of excitation as a custom function.
 
 \section{Boundary Conditions}\label{sec:BC}
     \subsection{General introduction to boundary conditions}\label{subsec:General introduction to BC}
@@ -37,10 +142,10 @@ This is a paragraph about the FDTD excitation signal setup
       % 	    \label{fig:General BC diagrams}
       %     \end{figure}
     \subsubsection{Four particularly useful types of boundary conditions in OpenEMS}\label{subsubsec:Four particularly usefull BC}
-	Under some special given conditions or assumptions, the boundary conditions(\ref{eq:General boundary conditions}) have  respective forms and they are convenient for the most simulations. These BC are called as perfect electric conductor (\textbf{PEC}), perfect magnetic conductor (\textbf{PMC}), \textbf{MUR} absorbing boundary condition and perfectly matched layer (\textbf{PML}) absorbing boundary condition. More details of these four types of BC are  given in the following subsections (\ref{subsec:PEC},\ref{subsec:PMC},\ref{subsec:MUR} and \ref{subsec:PML}).
+	Under some special given conditions or assumptions, the boundary conditions(\ref{eq:General boundary conditions}) have  respective forms and they are convenient for the most simulations. These BC are called as perfect electric conductor (\textbf{PEC}), perfect magnetic conductor (\textbf{PMC}), \textbf{MUR} absorbing boundary condition and perfectly matched layer (\textbf{PML}) absorbing boundary condition. More details of these four types of BC are  given in the following subsections (\ref{subsec:PEC}, \ref{subsec:PMC}, \ref{subsec:MUR} and  \ref{subsec:PML}). And the types of these BC are represented as a field of the structure  \hyperref[para:FDTD]{\texttt{FDTD}} in MATLAB. And it's named as \texttt{BoundaryCond}. \phantomsection \label{para:BoundaryCond}
     \subsubsection{Setting boundary conditions in OpenEMS with function SetBoundaryCond}\label{subsubsec:Setting boundary conditions in OpenEMS with function SetBoundaryCond}
 	\textcolor{blue}{\begin{large}\textbf{SetBoundaryCond}	\end{large}}\\
-	  Setting boundary conditions for simulation.
+	  Setting boundary conditions for simulation. Assigning the field \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}} of structure \hyperref[para:FDTD]{\texttt{FDTD}}  in MATLAB.
 
         \textcolor{blue}{\begin{large}Syntax:\end{large}}
  \begin{lstlisting}
@@ -53,14 +158,14 @@ FDTD = SetBoundaryCond(FDTD, BC, varargin)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% RETURN VALUE
 	      Return value 
 	\begin{myindentpar}
-      Return value of this function is a structure \texttt{FDTD}. This function can define the boundary conditions \texttt{BC} and the alternative advanced arguments \texttt{varargin} as a field of the structure  \texttt{FDTD} to generate an updated structure \texttt{FDTD}.  
+      Return value of this function is a structure \hyperref[para:FDTD]{\texttt{FDTD}}. This function can define the given boundary conditions \texttt{BC} and the alternative advanced arguments \texttt{varargin} as the field \texttt{BoundaryCond} of the structure  \hyperref[para:FDTD]{\texttt{FDTD}} to generate an updated structure \hyperref[para:FDTD]{\texttt{FDTD}}.  
       \end{myindentpar}
     %%%%%%%%%%%%%% warning
-	      \warning{ Please don't neglect the left expression '\texttt{FDTD}=' for the assignment, otherwise \texttt{FDTD} will not be updated.}\\ \\
+	      \warning{ Please don't neglect the left expression '\hyperref[para:FDTD]{\texttt{FDTD}}' for the assignment, otherwise \hyperref[para:FDTD]{\texttt{FDTD}} will not be updated.}\\ \\
 % 	\textcolor{blue}{\begin{large}Definitions:\end{large}}\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
-	\texttt{FDTD} 
-  \begin{myindentpar}\texttt{FDTD}  is a structure in Matlab. It contains 3 fields:
+	\hyperref[para:FDTD]{\texttt{FDTD}}
+  \begin{myindentpar}\hyperref[para:FDTD]{\texttt{FDTD}}  is a structure in Matlab. It contains 3 fields:
        \begin{myindentpar}\texttt{ATTRIBUTE} \\
 	      \texttt{Excitation} \\
 	      \texttt{BoundaryCond}
@@ -116,7 +221,7 @@ FDTD = SetBoundaryCond(FDTD, BC, varargin)
 	  \label{Elements of BC and the rescpective boundaries}.
          \end{myindentpar}
             %%%%%%%%%%%%%%%% Info 
-	\info{In a cylindrical system,  the elements of \texttt{BC} represent for the types of boundaries conditions respective at $\rho$, $\varphi$, z instead of x, y, z(see listing \ref{ListingCylinBC}). If there are no  BC at $\rho\_min=0$ or at $\varphi$,  then the elements of  \texttt{BC} for respective boundaries conditions   can be set as \texttt{0} or \texttt{'PEC'} just in a virtual form for computation(see listing \ref{listing:SettingofBC in a cylin.}). For these cases, the respective elements have nothing to do with the boundaries conditions indeed. } 
+	\info{In a cylindrical system,  the elements of \texttt{BC} represent for the types of boundaries conditions respective at $\rho$, $\varphi$, z instead of x, y, z(see listing \ref{ListingCylinBC}). If there are no  BC at $\rho\_min=0$ or at $\varphi$,  then the elements of  \texttt{BC} for respective boundaries conditions   can be set as \texttt{0} or \texttt{'PEC'} just in a virtual form for computation(see listing \ref{listing:SettingofBC in a cylin.}). For these cases, the respective elements have nothing to do with the boundaries conditions indeed. } \\
 % 	  \lstset{caption={\texttt{BC} in a cylindrical coordinate},label={ListingCylinBC}}
          \begin{lstlisting}[caption={\texttt{BC} in a cylindrical coordinate},label={ListingCylinBC}]
 % as a vector
@@ -168,18 +273,18 @@ FDTD = SetBoundaryCond(FDTD, BC, varargin)
 	  %or using equivalent strings
 	  BC={'PMC' 'PMC' 'PEC' 'PEC' 'MUR' 'PML_8'} 
 		      \end{lstlisting}
-	  Both above vector and cell set  the x-boundaries(perpendicular to x axis) as PML, and the y-boundaries(perpendicular to y axis) as PEC, the zmin-boundary(perpendicular to z axis and z is minimum) as MUR but the zmax-boundary(perpendicular to z axis and z is maximum) as PML with 8 layers. These boundary condition are showed in fig \ref{fig:Ex. 1st of SetBoundaryCond}.
+	  Both above vector and cell set  the x-boundaries(perpendicular to x axis) as PMC, and the y-boundaries(perpendicular to y axis) as PEC, the zmin-boundary(perpendicular to z axis and z is minimum) as MUR but the zmax-boundary(perpendicular to z axis and z is maximum) as PML with 8 layers. These boundary condition are showed in fig \ref{fig:Ex. 1st of SetBoundaryCond}.
 	      \begin{figure}[ht]
 		      \centering
-% 		    \subfloat[BC at x and y]{\includegraphics[width=0.4\textwidth]{svg/BC_XY1.eps}}\qquad
-% 		    \subfloat[BC at x and z]{\includegraphics[width=0.4\textwidth]{svg/BC_XZ1.eps}}\qquad 
-\includegraphics[width=0.9\textwidth]{svg/BCXY.eps}
+		    \subfloat[BC at x and y]{\includegraphics[width=0.4\textwidth]{svg/BCXY1.eps}}\qquad
+		    \subfloat[BC at x and z]{\includegraphics[width=0.4\textwidth]{svg/BCXZ1.eps}}\qquad 
+%\includegraphics[width=0.9\textwidth]{svg/BCXY.eps}
 		      \caption[1st example for the setting of boundaries conditions]{\texttt{BC=[1 1  0 0  2 3]} ,see listing \ref{listing:1st SettingofBC}}
 		      \label{fig:Ex. 1st of SetBoundaryCond}
 		\end{figure}
     \end{myindentpar}
 %%%%%%%2nd step
-      2nd step: Updating the FDTD structure with BC or other andvanced arguments.
+      2nd step: Updating the \hyperref[para:FDTD]{\texttt{FDTD}} structure with BC or other andvanced arguments.
       \begin{myindentpar}	    
 		    \begin{lstlisting}
   % without advanced arguments
@@ -263,8 +368,11 @@ If there are boundaries at $\rho_{min}\neq0$ and $\varphi$, then please set the 
     %     \end{figure}
 
 \subsection{Perfect magnetic conductor (PMC)}\label{subsec:PMC}
+H perpendicular to BC
 
 \subsection{MUR absorbing boundary condition}\label{subsec:MUR}
 
 \subsection{Perfectly matched layer (PML) absorbing boundary condition}\label{subsec:PML}
-$\pi$
+matched--inpedance ,no reflection , for infinite  material, an virtual BC for computation
+
+
