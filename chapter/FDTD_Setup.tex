@@ -1,23 +1,29 @@
-\chapter{FDTD Parameter Setup}
-This is a chapter about the proper setup of all necessary FDTD parameter.
+\chapter{FDTD Parameter Setup}\label{chap:FDTD Parameter Setup}
+This is a chapter about the proper setup of all necessary FDTD parameter.\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\texttt{FDTD}    is a structure in Matlab to describe some parameters of the algorithm FDTD for simulation with OpenEMS. It contains 3 fields: \phantomsection \label{para:FDTD} %\hyperref[para:FDTD]{\texttt{FDTD}}
+       \begin{myindentpar}
+	      \hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} \\ 
+	      \hyperref[para:Excitation]{\texttt{Excitation}}  \\ 
+	      \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}}
+       \end{myindentpar}
+All fields and  their elements  are showed in the figure \ref{fig:Structure FDTD}
 
-\section{Excitation signal setup}
-This is a paragraph about the FDTD excitation signal setup
 
-\subsection{Gaussian pulse}
+  \def\svgwidth{0.8\textwidth}
+   \input{svg/FDTD_structure.eps_tex} % this file is from inkscape. saved as with option  omit text and in latex. it has been modified for links.
 
-\subsection{Sinousoidal signal}
+Most of these parameters should be assigned with respective functions in MATLAB before a simulation is run in OpenEMS. And this process can be completed step by step. Firstly the structure \hyperref[para:FDTD]{\texttt{FDTD}} should be initiated(see section \ref{sec:FDTD_ATTRIBUTE}), then  \hyperref[para:Excitation]{\texttt{Excitation}} (see section \ref{sec:FDTD_Excitation}) and \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}} (see section \ref{sec:BC}) are set up in the structure.%\hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} has other advanced  parameters of \hyperref[para:FDTD]{\texttt{FDTD}}, such as the type of the coordinates system,  criteria for ending the simulation and so on.
 
-\subsection{Other excitation signals}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%section Attributes of FDTD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{chapter/SEC_of_FDTD_Setup/Initia_FDTD} 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%section Excitation signal setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{chapter/SEC_of_FDTD_Setup/Excitation} 
 
-\section{Boundary Conditions}
-This is a paragraph about the FDTD boundary conditions
-
-\subsection{Perfect electric conductor (PEC)}
-
-\subsection{Perfect magnetic conductor (PMC)}
-
-\subsection{MUR absorbing boundary condition}
-
-\subsection{Perfectly matched layer (PML) absorbing boundary condition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%section Boundary Conditions%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{chapter/SEC_of_FDTD_Setup/Boundary} 

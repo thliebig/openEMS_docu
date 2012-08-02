@@ -1,0 +1,79 @@
+%% Creator: Inkscape inkscape 0.48.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'FDTD_structure.eps' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{286bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+\begin{figure}[ht]\centering
+  \begin{picture}(1,0.97482517)%
+    \put(0,0){\includegraphics[width=\unitlength]{svg/FDTD_structure.eps}}%
+    \put(0.02517483,0.46293706){\makebox(0,0)[lb]{\hyperref[para:FDTD]{\texttt{FDTD}}}}%
+    \put(0.23776224,0.16083916){\makebox(0,0)[lb]{\hyperref[para:BoundaryCond]{\texttt{BoundaryCond}}}}%
+    \put(0.5958042,0.16643357){\makebox(0,0)[lb]{\texttt{ ATTRIBUTE}}}%
+    \put(0.88951049,0.01258741){\makebox(0,0)[lb]{\texttt{zmax}}}%
+    \put(0.89230769,0.07412587){\makebox(0,0)[lb]{\texttt{zmin}}}%
+    \put(0.89230769,0.13566434){\makebox(0,0)[lb]{\texttt{ymax}}}%
+    \put(0.88951049,0.1972028){\makebox(0,0)[lb]{\texttt{ymin}}}%
+    \put(0.89230769,0.25874126){\makebox(0,0)[lb]{\texttt{xmax}}}%
+    \put(0.88951049,0.32027972){\makebox(0,0)[lb]{\texttt{xmin}}}%
+    \put(0.23776224,0.46853147){\makebox(0,0)[lb]{\hyperref[para:Excitation]{\texttt{Excitation}}}}%
+    \put(0.51188811,0.47412587){\makebox(0,0)[lb]{\texttt{ATTRIBUTE}}}%
+    \put(0.79440559,0.38181818){\makebox(0,0)[lb]{\texttt{Function}}}%
+    \put(0.7972028,0.44335664){\makebox(0,0)[lb]{\texttt{fc}}}%
+    \put(0.79440559,0.5048951){\makebox(0,0)[lb]{\texttt{f0}}}%
+    \put(0.7972028,0.56643357){\makebox(0,0)[lb]{\texttt{Type}}}%
+    \put(0.23776224,0.78181818){\makebox(0,0)[lb]{\hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}}}}%
+    \put(0.52307692,0.62797203){\makebox(0,0)[lb]{\texttt{f\_max}}}%
+    \put(0.52307692,0.68951049){\makebox(0,0)[lb]{\texttt{CylinderCoords}}}%
+    \put(0.52027972,0.75104895){\makebox(0,0)[lb]{\texttt{ MultiGrid}}}%
+    \put(0.52307692,0.81258741){\makebox(0,0)[lb]{\texttt{OverSampling}}}%
+    \put(0.52307692,0.87412587){\makebox(0,0)[lb]{\texttt{endCriteria}}}%
+    \put(0.52027972,0.93566434){\makebox(0,0)[lb]{\texttt{NumberOfTimesteps}}}%
+  \end{picture}%
+\caption[Structure \texttt{FDTD}]{Structure \hyperref[para:FDTD]{\texttt{FDTD}}}  \label{fig:Structure FDTD}%
+\end{figure}
+\endgroup%
