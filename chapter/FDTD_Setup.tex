@@ -2,7 +2,7 @@
 This is a chapter about the proper setup of all necessary FDTD parameter.\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\texttt{FDTD}    is a structure in Matlab to describe some parameters of the algorithm FDTD. It contains 3 fields: \phantomsection \label{para:FDTD} %\hyperref[para:FDTD]{\texttt{FDTD}}
+\texttt{FDTD}    is a structure in Matlab to describe some parameters of the algorithm FDTD for simulation with OpenEMS. It contains 3 fields: \phantomsection \label{para:FDTD} %\hyperref[para:FDTD]{\texttt{FDTD}}
        \begin{myindentpar}
 	      \hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} \\ 
 	      \hyperref[para:Excitation]{\texttt{Excitation}}  \\ 
@@ -14,39 +14,37 @@ All fields and  their elements  are showed in the figure \ref{fig:Structure FDTD
   \def\svgwidth{0.8\textwidth}
    \input{svg/FDTD_structure.eps_tex} % this file is from inkscape. saved as with option  omit text and in latex. it has been modified for links.
 
-Most of these parameters should be assigned with respective functions in MATLAB before a simulation is run in OpenEMS. And this process can be completed step by step. Firstly the structure \hyperref[para:FDTD]{\texttt{FDTD}} should be initiated(see section \ref{sec:FDTD_ATTRIBUTE}), then  \hyperref[para:Excitation]{\texttt{Excitation}} (see section \ref{sec:FDTD_Excitation}) and \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}} (see section \ref{sec:BC}) are set up in the structure. It can be updated step by step in MATLAB.%\hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} has other advanced  parameters of \hyperref[para:FDTD]{\texttt{FDTD}}, such as the type of the coordinates system,  criteria for ending the simulation and so on.
+Most of these parameters should be assigned with respective functions in MATLAB before a simulation is run in OpenEMS. And this process can be completed step by step. Firstly the structure \hyperref[para:FDTD]{\texttt{FDTD}} should be initiated(see section \ref{sec:FDTD_ATTRIBUTE}), then  \hyperref[para:Excitation]{\texttt{Excitation}} (see section \ref{sec:FDTD_Excitation}) and \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}} (see section \ref{sec:BC}) are set up in the structure.%\hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} has other advanced  parameters of \hyperref[para:FDTD]{\texttt{FDTD}}, such as the type of the coordinates system,  criteria for ending the simulation and so on.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%section Attributes of FDTD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Attributes of FDTD} \label{sec:FDTD_ATTRIBUTE}
+\section{Initiation of \hyperref[para:FDTD]{\texttt{FDTD}}} \label{sec:FDTD_ATTRIBUTE}
 \phantomsection \label{para:FDTD_ATTRIBUTE}
-This section shows how to initiate a \hyperref[para:FDTD]{\texttt{FDTD}} with some given attributes. 
-
+This section shows how to initiate the structure \hyperref[para:FDTD]{\texttt{FDTD}} with some given attributes. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% RETURN VALUE
+	      Return value 
+	\begin{myindentpar}
+      Return value of this function is a structure \hyperref[para:FDTD]{\texttt{FDTD}}. This function can define the given boundary conditions \texttt{BC} and the alternative advanced arguments \texttt{varargin} as the field \texttt{BoundaryCond} of the structure  \hyperref[para:FDTD]{\texttt{FDTD}} to generate an updated structure \hyperref[para:FDTD]{\texttt{FDTD}}.  
+      \end{myindentpar}
+    %%%%%%%%%%%%%% warning
+	      \warning{ Please don't neglect the left expression '\hyperref[para:FDTD]{\texttt{FDTD}}' for the assignment, otherwise \hyperref[para:FDTD]{\texttt{FDTD}} will not be updated.}\\ \\
+% 	\textcolor{blue}{\begin{large}Definitions:\end{large}}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%section Excitation signal setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Excitation signal setup} \label{sec:FDTD_Excitation}
-An excitation  is a source of the  electric magnetic field. It can be  an electrical field intensity E or an magnetic field intensity H. And  in OpenEMS, each excitation can be considered as a composition  of two parts -- a signal of  time or  frequency as well as  a distribution or an application in the space. The first part is called excitation signal here. And in Matlab it is defined as one field of the structure \hyperref[para:FDTD]{\texttt{FDTD}}, which is named as \texttt{Excitation}. \phantomsection \label{para:Excitation} \\%\hyperref[para:Excitation]{\texttt{Excitation}} 
+An excitation  is a source of the  electric magnetic field. It can be  an electrical field intensity $\vec{E}$ or an magnetic field intensity $\vec{H}$. And  in OpenEMS, each excitation can be considered as a composition  of two parts -- a signal of  time or  frequency as well as  a distribution or an application in the space. The first part is called excitation signal here. And in Matlab it is defined as one field of the structure \hyperref[para:FDTD]{\texttt{FDTD}}, which is named as \texttt{Excitation}. \phantomsection \label{para:Excitation}\\%\hyperref[para:Excitation]{\texttt{Excitation}} 
 
-\hyperref[para:Excitation]{\texttt{Excitation}} might include the following  subfields\footnote{It depends on the type of the signal}: 
-       \begin{myindentpar}
-	      \texttt{FDTD.Excitation.ATTRIBUTE.Type} \\ 
-	      \texttt{FDTD.Excitation.ATTRIBUTE.f0} \\ 
-	      \texttt{FDTD.Excitation.ATTRIBUTE.fc} \\
-              \texttt{FDTD.Excitation.ATTRIBUTE.Function}
-       \end{myindentpar}
-
- Following subsections are  about how to set up an \hyperref[para:Excitation]{\texttt{Excitation}} as a Gaussian pulse, a sinusoidal signal or other customs excitation signals.\footnote{How to apply the \hyperref[para:Excitation]{\texttt{Excitation}}  to any given space(meshes or grids) is showed in the section \ref{sect-Primitives}.} See the functions for setting the excitation signals:
+This section will show how to set up an \hyperref[para:Excitation]{\texttt{Excitation}} such as a Gaussian pulse, a sinusoidal signal or other customs excitation signals,\footnote{How to apply the \hyperref[para:Excitation]{\texttt{Excitation}}  to any given space(meshes or grids) is showed in the section \ref{sect-Primitives}.} with the following functions:
        \begin{myindentpar}
 	      \hyperref[func:SetGaussExcite]{\texttt{SetGaussExcite(FDTD,f0,fc)}} \\ 
 	      \hyperref[func:SetSinusExcite]{\texttt{SetSinusExcite(FDTD,f0)}}\\ 
 	      \hyperref[func:SetCustomExcite]{\texttt{SetCustomExcite(FDTD,f0,funcStr)}}
        \end{myindentpar}
-The excitation signals in MATLAB are all defined as  functions of frequency, since signals in time domain or frequency domain can be transformed into each other.   More Details are showed in the following subsections \ref{subsec:Gaussian pulse}, \ref{subsec:Sinousoidal signal} and \ref{subsec:Other excitation signals}\\
+Note that Gaussian and sinusoidal excitatian are defined in frequency domain , since signals in time domain or frequency domain can be transformed into each other.   More Details are showed in the following subsections \ref{subsec:Gaussian pulse}, \ref{subsec:Sinousoidal signal} and \ref{subsec:Other excitation signals}\\
+Exact definetion of these excitation signals can be found in the source codes file: \textasciitilde/openems/openEMS/FDTD/excitation.cpp.\\
 \info{One  simulation has one excitation signal. 
-And if many excitation signals are involved in a case, superposition principle can be utilized to  attain the equivalent simulation.\\
-\texttt{FDTD.ATTRIBUTE.f\_max} will be also assigned  at the same time while using these functions.}\\
-
-The source codes of these excitations are in the file: \textasciitilde/openems/openEMS/FDTD/excitation.cpp.
+And if many excitation signals are involved in a case, superposition principle can be utilized to  attain the equivalent simulation.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subsection Gaussian pulse %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \subsection{Gaussian pulse} \label{subsec:Gaussian pulse}
 If $f_0$ is a modulated frequency and $f_c$ is a bandwidth between  two cutoff frequencies $f_0-f_c/2$ and  $f_0+f_c/2$ at -5dB, then a time domain Gaussian signal (a pure Gaussian signal modulated by a co-sinusoidal signal)
@@ -71,7 +69,7 @@ According to the expression \ref{equ:GussianSignal_freq}, a Gaussian signal can 
 
 %%%%%%%%%%%%%%%%%%%%%%% FUNCTION  SetGaussExcite %%%%%%%%%%%%%%%%
 \textcolor{blue}{\begin{large}\textbf{SetGaussExcite}	\end{large}}\phantomsection \label{func:SetGaussExcite}\\
-	  Set the signal of the excitation as a Gaussian function.
+	  Set a Gaussian function as the signal of the excitation.
 
 \textcolor{blue}{\begin{large}Syntax:\end{large}}
  \begin{lstlisting}
@@ -82,18 +80,10 @@ FDTD = SetGaussExcite(FDTD,f0,fc)
       This function update the structure \hyperref[para:FDTD]{\texttt{FDTD}} with the expression \ref{equ:GussianSignal_freq}. 
 
 \textcolor{blue}{\begin{large}Description:\end{large}}\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% RETURN VALUE
-	      Return value 
-	\begin{myindentpar}
-      Return value of this function is an updated structure \hyperref[para:FDTD]{\texttt{FDTD}} with assignments to the field \hyperref[para:FDTD]{\texttt{FDTD}}.\hyperref[para:Excitation]{\texttt{Excitation}}. And \texttt{FDTD.ATTRIBUTE.f\_max}=\hyperref[para:f0]{\texttt{f0}}+\hyperref[para:fc]{\texttt{fc}}.
-      \end{myindentpar}
-    %%%%%%%%%%%%%% warning
-	      \warning{ Please don't neglect the left expression '\texttt{FDTD}=' for the assignment, otherwise \texttt{FDTD} will not be updated.}\\ \\
-% 	\textcolor{blue}{\begin{large}Definitions:\end{large}}\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
 	\hyperref[para:FDTD]{\texttt{FDTD}} 
 	    \begin{myindentpar}
-		A structure in MATLAB interface. See \hyperref[para:FDTD]{\texttt{FDTD}}.
+		A structure in MATLAB. See \hyperref[para:FDTD]{\texttt{FDTD}}.
 	    \end{myindentpar}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% f0
 	\texttt{f0}  \phantomsection \label{para:f0} %\hyperref[para:f0]{\texttt{f0}} 
@@ -117,37 +107,15 @@ FDTD = InitFDTD(5000,1e-5,'OverSampling',10);
 % Update FDTD with a  Gaussian pulse excitation. 
 % f0=0.5GHz, fc=0.5GHz
 FDTD = SetGaussExcite(FDTD,0.5e9,0.5e9);
-%The field  FDTD.Excitation.ATTRIBUTE  and FDTD.ATTRIBUTE.f_max have been assigned.
+% The field  FDTD.Excitation.ATTRIBUTE  has been assigned.
 \end{lstlisting}
 Under this setting, a Gaussian pulse has been set up. And the signal reduces to -5dB at 0.25GHz and 0.75GHz. The maximal frequency in simulation is 1GHz.
-To check the results of the assignment, please type 
-\begin{lstlisting}
-FDTD.Excitation.ATTRIBUTE
-\end{lstlisting}
-in the command line of MATLAB. Following results will be showed out
-\begin{lstlisting}
-ans = 
-
-    Type: 0
-      f0: 500000000
-      fc: 500000000
-\end{lstlisting}
-And type
-\begin{lstlisting}
-FDTD.ATTRIBUTE.f_max
-\end{lstlisting}
-then Following result will be showed out
-\begin{lstlisting}
-ans =
-
-   1.0000e+09
-\end{lstlisting}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subsection Sinousoidal signal %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \subsection{Sinousoidal signal}\label{subsec:Sinousoidal signal}
 \textcolor{blue}{\begin{large}\textbf{SetSinusExcite}	\end{large}}\phantomsection \label{func:SetSinusExcite}\\
-	  Set the signal of the excitation as a sinusoidal function.
+	  Set a sinusoidal function as the signal of the excitation.
 
 \textcolor{blue}{\begin{large}Syntax:\end{large}}
  \begin{lstlisting}
@@ -161,14 +129,6 @@ FDTD = SetSinusExcite(FDTD,f0)
 \end{equation}
 
 \textcolor{blue}{\begin{large}Description:\end{large}}\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% RETURN VALUE
-Return value 
-	\begin{myindentpar}
-	    Return value of this function is an updated structure \hyperref[para:FDTD]{\texttt{FDTD}} with assignments to the field \hyperref[para:FDTD]{\texttt{FDTD}}.\hyperref[para:Excitation]{\texttt{Excitation}}. And \texttt{FDTD.ATTRIBUTE.f\_max}=\hyperref[para:f0]{\texttt{f0}}
-       \end{myindentpar}
-    %%%%%%%%%%%%%% warning
-	      \warning{ Please don't neglect the left expression '\texttt{FDTD}=' for the assignment, otherwise \texttt{FDTD} will not be updated.}\\ \\
-% 	\textcolor{blue}{\begin{large}Definitions:\end{large}}\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
 	\hyperref[para:FDTD]{\texttt{FDTD}} 
 	    \begin{myindentpar}
@@ -187,41 +147,22 @@ Return value
 \begin{lstlisting}
 % Initiation of FDTD 
 FDTD = InitFDTD(5000,1e-5,'OverSampling',10);
+% Assignment for f0
+f0=0.5e9；
 % Update FDTD with a sinousoidal excitation. 
-% f0=0.5GHz
-FDTD = SetSinusExcite(FDTD,0.5e9);
-%The field  FDTD.Excitation.ATTRIBUTE  and FDTD.ATTRIBUTE.f_max have  been assigned.
+FDTD = SetSinusExcite(FDTD,f0);
+% The field  FDTD.Excitation.ATTRIBUTE
+% has been assigned.
 \end{lstlisting}
-A sinousoidal excitation with frequency 0.5GHz has been set up. 
-To check the results of the assignment, please type 
-\begin{lstlisting}
-FDTD.Excitation.ATTRIBUTE
-\end{lstlisting}
-in the command line of MATLAB. Following results will be showed out
-\begin{lstlisting}
-ans = 
-
-    Type: 1
-      f0: 500000000
-\end{lstlisting}
-And type
-\begin{lstlisting}
-FDTD.ATTRIBUTE.f_max
-\end{lstlisting}
-then Following result will be showed out
-\begin{lstlisting}
-ans =
-
-   500000000
-\end{lstlisting}
+A sinousoidal excitation with frequency 0.5GHz has been set up in OpenEMS. 
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subsection excitation signals %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \subsection{Other excitation signals}\label{subsec:Other excitation signals}
-OpenEMS provides vavious kinds of excitation signal. Except for the Gaussian pulse and sinusoidal signal, it have also other forms of excitation, such as dirac function, step function and even custom function. Here is the introduction of how to set up an excitation with any custom function.
+OpenEMS provides various kinds of excitation signals. Besides the Gaussian pulse and sinusoidal signal, it has also other forms of excitation, such as dirac function, step function and even custom function. Here is the introduction of how to set up an excitation with any custom function by using \hyperref[func:SetCustomExcite]{\texttt{SetCustomExcite}}.
 
 \textcolor{blue}{\begin{large}\textbf{SetCustomExcite}	\end{large}}\phantomsection \label{func:SetCustomExcite}\\
-	  Set the signal of the excitation from a custom function.
+	  Set a custom function as the signal of the excitation.
 
 \textcolor{blue}{\begin{large}Syntax:\end{large}}
  \begin{lstlisting}
@@ -232,19 +173,10 @@ FDTD = SetCustomExcite(FDTD,f0,funcStr)
       The signal in time domain is a function like the given string \texttt{funcStr}.
 
 \textcolor{blue}{\begin{large}Description:\end{large}}\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% RETURN VALUE
-Return value 
-	\begin{myindentpar}
-	    Return value of this function is an updated structure \hyperref[para:FDTD]{\texttt{FDTD}} with assignments to the field \hyperref[para:FDTD]{\texttt{FDTD}}.\hyperref[para:Excitation]{\texttt{Excitation}}. And \texttt{FDTD.ATTRIBUTE.f\_max}=\hyperref[para:f0]{\texttt{f0}}
-       \end{myindentpar}
-\info{An additional field \texttt{FDTD.Excitation.ATTRIBUTE.Function=funcStr}}
-    %%%%%%%%%%%%%% warning
-	      \warning{ Please don't neglect the left expression '\texttt{FDTD}=' for the assignment, otherwise \texttt{FDTD} will not be updated.}\\ \\
-% 	\textcolor{blue}{\begin{large}Definitions:\end{large}}\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
 	\hyperref[para:FDTD]{\texttt{FDTD}} 
 	    \begin{myindentpar}
-		A structure in MATLAB interface. See \hyperref[para:FDTD]{\texttt{FDTD}}.
+		A structure in MATLAB. See \hyperref[para:FDTD]{\texttt{FDTD}}.
 	    \end{myindentpar}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% f0
 	\texttt{f0}  \phantomsection \label{para:custom_f0} %\hyperref[para:f0]{\texttt{f0}} 
@@ -254,7 +186,7 @@ Return value
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% funcStr
 	\texttt{funcStr}  \phantomsection \label{para:custom_funcStr} %\hyperref[para:custom_funcStr]{\texttt{funcStr}} 
 	    \begin{myindentpar}
-		\hyperref[para:custom_funcStr]{\texttt{funcStr}}   is a string of an expression in MATLAB. This expression is of \texttt{t}, the time. And two constant can be used directly in the expression, \texttt{e} for Euler's number and \texttt{pi} for $\pi$. Futher more any strings of defined valueables can be used in \hyperref[para:custom_funcStr]{\texttt{funcStr}}.
+		\hyperref[para:custom_funcStr]{\texttt{funcStr}}   is a string of an expression in MATLAB. This expression is of \texttt{t}, the time. It denotes how is the function of excitation.  And two constants can be used directly in the expression, \texttt{e} for Euler's number and \texttt{pi} for $\pi$. Futher more any strings of defined valuables can be used in \hyperref[para:custom_funcStr]{\texttt{funcStr}}.
 	    \end{myindentpar}
 
 %%%%%%%%%%%%%%%%%%%%% Examples.	  
@@ -270,27 +202,12 @@ f0=1e9;
 T = 1/f0;
 % Update FDTD with a given string 
 % of an excitation expression of t. 
-FDTD = SetCustomExcite(FDTD,1e9, ...
-       [ '(1-exp(-1*(t/' num2str(T) ')^2) ) * ...
-       sin(2*pi*' num2str(f0) '*t)' ]);
-% The field  FDTD.Excitation.ATTRIBUTE  and
-% FDTD.ATTRIBUTE.f_max have  been assigned.
-% Show the updated fields of  the Structure FDTD
-FDTD.Excitation.ATTRIBUTE
-FDTD.ATTRIBUTE.f_max
-	\end{lstlisting}
-	The ramped sinus excitation has been set up.  Following results will be showed out
-	\begin{lstlisting}
-ans = 
-
-        Type: 10
-          f0: 1.0000e+09
-    Function: '(1-exp(-1*(t/1e-09)^2) ) * sin(2*pi*1000000000*t)'
-
-
-ans =
-
-   1.0000e+09
+FDTD = SetCustomExcite(FDTD,f0, ...
+       [ '(1-exp(-1*(t/' num2str(T) ...
+        ')^2) ) * sin(2*pi*'  ...
+        num2str(f0) '*t)' ]);
+% The field  FDTD.Excitation.ATTRIBUTE 
+% has  been assigned.
 	\end{lstlisting}
     \end{itemize}
 
@@ -336,15 +253,6 @@ FDTD = SetBoundaryCond(FDTD, BC, varargin)
  \end{lstlisting}
 
 	\textcolor{blue}{\begin{large}Description:\end{large}}\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% RETURN VALUE
-	      Return value 
-	\begin{myindentpar}
-      Return value of this function is a structure \hyperref[para:FDTD]{\texttt{FDTD}}. This function can define the given boundary conditions \texttt{BC} and the alternative advanced arguments \texttt{varargin} as the field \texttt{BoundaryCond} of the structure  \hyperref[para:FDTD]{\texttt{FDTD}} to generate an updated structure \hyperref[para:FDTD]{\texttt{FDTD}}.  
-      \end{myindentpar}
-    %%%%%%%%%%%%%% warning
-	      \warning{ Please don't neglect the left expression '\hyperref[para:FDTD]{\texttt{FDTD}}' for the assignment, otherwise \hyperref[para:FDTD]{\texttt{FDTD}} will not be updated.}\\ \\
-% 	\textcolor{blue}{\begin{large}Definitions:\end{large}}\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
 	\hyperref[para:FDTD]{\texttt{FDTD}}
   \begin{myindentpar}\hyperref[para:FDTD]{\texttt{FDTD}}  is a structure in Matlab. It contains 3 fields:
        \begin{myindentpar}\texttt{ATTRIBUTE} \\
