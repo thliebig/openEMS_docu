@@ -97,7 +97,7 @@ FDTD = SetBoundaryCond(FDTD, BC, varargin)
 	  \label{Elements of BC and the rescpective boundaries}.
          \end{myindentpar}
             %%%%%%%%%%%%%%%% Info 
-	\info{In a cylindrical system,  the elements of \texttt{BC} represent for the types of boundaries conditions respective at $\rho$, $\varphi$, z instead of x, y, z(see listing \ref{ListingCylinBC}). If there are no  BC at $\rho\_min=0$ or at $\varphi$,  then the elements of  \texttt{BC} for respective boundaries conditions   can be set as \texttt{0} or \texttt{'PEC'} just in a virtual form for computation(see listing \ref{listing:SettingofBC in a cylin.}). For these cases, the respective elements have nothing to do with the boundaries conditions indeed. } \\
+	\info{In a cylindrical system,  the elements of \texttt{BC} represent for the types of boundary conditions respective at $\rho$, $\varphi$, z instead of x, y, z(see listing \ref{ListingCylinBC}). If there are no  BC at $\rho\_min=0$ or at $\varphi$,  then the elements of  \texttt{BC} for respective boundaries conditions   can be set as \texttt{0} or \texttt{'PEC'} just in a virtual form for computation(see listing \ref{listing:SettingofBC in a cylin.}). For these cases, the respective elements have nothing to do with the boundaries conditions indeed. } \\
 % 	  \lstset{caption={\texttt{BC} in a cylindrical coordinate},label={ListingCylinBC}}
          \begin{lstlisting}[caption={\texttt{BC} in a cylindrical coordinate},label={ListingCylinBC}]
 % as a vector
@@ -140,7 +140,7 @@ FDTD = SetBoundaryCond(FDTD, BC, varargin)
 	\textcolor{blue}{\begin{large}Examples:\end{large}}\\
 \begin{itemize}
 %%%%%%%1st step
- \item    Setting boundaries conditions in a Cartesian coordinate system.\\
+ \item    Setting boundary conditions in a Cartesian coordinate system.\\
        1st step: \texttt{BC} assignment
     \begin{myindentpar}
 	  \begin{lstlisting}[caption={BC assignment as fig \ref{fig:Ex. 1st of SetBoundaryCond} },label={listing:1st SettingofBC}]
@@ -155,7 +155,7 @@ FDTD = SetBoundaryCond(FDTD, BC, varargin)
 		    \subfloat[BC at x and y]{\includegraphics[width=0.4\textwidth]{svg/BCXY1.eps}}\qquad
 		    \subfloat[BC at x and z]{\includegraphics[width=0.4\textwidth]{svg/BCXZ1.eps}}\qquad 
 %\includegraphics[width=0.9\textwidth]{svg/BCXY.eps}
-		      \caption[1st example for the setting of boundaries conditions]{\texttt{BC=[1 1  0 0  2 3]} ,see listing \ref{listing:1st SettingofBC}}
+		      \caption[1st example for the setting of boundary conditions]{\texttt{BC=[1 1  0 0  2 3]} ,see listing \ref{listing:1st SettingofBC}}
 		      \label{fig:Ex. 1st of SetBoundaryCond}
 		\end{figure}
     \end{myindentpar}
@@ -180,7 +180,7 @@ FDTD = SetBoundaryCond(FDTD, BC, varargin)
 		    \end{lstlisting}	 
     \end{myindentpar}	
 %%%%%%%%%% cylindrical sys
- \item Setting boundaries conditions in a cylindrical coordinate system.\\
+ \item Setting boundary conditions in a cylindrical coordinate system.\\
 If there are no boundaries at  $\rho_{min}=0$ and at any $\varphi$, then please set the elements as \texttt{0} or \texttt{'PEC'} as the following example.
     \begin{lstlisting}[caption={BC assignment in a cylindrical coordinate system as fig \ref{fig:Ex. SetBoundaryCond in cylin.}},label={listing:SettingofBC in a cylin.}]
 	% no boundaries at rhomin=0 , phi_min and phi_max
@@ -192,7 +192,7 @@ If there are no boundaries at  $\rho_{min}=0$ and at any $\varphi$, then please 
     \begin{figure}[ht]
 			  \centering
 			\includegraphics[width=0.6\textwidth]{svg/CylinBCXY.eps}\qquad
-			  \caption[ Setting virtual boundaries conditions in a cylindrical coordinate system]{Virtual boundaries conditions in a cylindrical coordinate system. See listing \ref{listing:SettingofBC in a cylin.}}
+			  \caption[ Setting virtual boundary conditions in a cylindrical coordinate system]{Virtual boundary conditions in a cylindrical coordinate system. See listing \ref{listing:SettingofBC in a cylin.}}
 			  \label{fig:Ex. SetBoundaryCond in cylin.}
 		    \end{figure}
 %%%%%%%%%%%%% half cylindrical
@@ -208,7 +208,7 @@ If there are boundaries at $\rho_{min}\neq0$ and $\varphi$, then please set the 
 			  \centering
  \subfloat[Boundaries conditions at $z$  ]{\includegraphics[width=0.6\textwidth]{svg/CylinBCXZ2.eps}}\qquad
  \subfloat[ Boundaries conditions at $\rho$ and $\varphi$ ]{\includegraphics[width=0.55\textwidth]{svg/CylinBCXY2.eps}}\qquad 
-			  \caption[ Setting  boundaries conditions in a cylindrical coordinate system]{An example of boundaries conditions in a cylindrical coordinate system. See listing \ref{listing:SettingofBC in a cylin. Half}}
+			  \caption[ Setting  boundary conditions in a cylindrical coordinate system]{An example of boundary conditions in a cylindrical coordinate system. See listing \ref{listing:SettingofBC in a cylin. Half}}
 			  \label{fig:Ex. SetBoundaryCond in cylin. Half}
 		    \end{figure}
 \end{itemize}
