@@ -1,0 +1,135 @@
+\section{CSXProperties}\label{csx_prop} 
+CSProperties describe the physical and non-physical properties of a model and has to be defined before the primitive properties. 
+
+\subsection{Physical CSXProperties}
+The physical CSXProperties which can be used in OpenEMS: 
+ 
+\begin{enumerate}
+\item Material Properties
+\item Metal
+\item Discretized material definition 
+\item Dispersive Material
+\item LumpedElement
+\end{enumerate}
+
+\subsubsection{Material Properties}
+
+\textcolor{blue}{\begin{large}\textbf{AddMaterial}\end{large}}\\
+The {\hyperref[para:Material Properties ]{\texttt{Material Properties }}} such as relative conductivity, permittivity and permeability can be defined with function \hyperref[para:SetMaterialProperty]{\texttt{SetMaterialProperty}}. Prio to it, the specified material has to added into CSX with function \hyperref[para:AddMaterial]{\texttt{AddMaterial}}.\\
+
+\textcolor{blue}{\begin{large}Syntax:\end{large}}
+ \begin{lstlisting}
+CSX = AddMaterial(CSX, name,varargin)
+ \end{lstlisting}
+ 
+ \textcolor{blue}{\begin{large}Description:\end{large}}\\
+  This function adds a material property to CSX with the given name.
+  
+ \hyperref[para:CSX]{\texttt{CSX}} 
+ \begin{myindentpar}\hyperref[para:CSX]{\texttt{CSX}} describes geometrical objects and their physical or non-physical properties in .xml file.
+ \end{myindentpar} 
+ \texttt{name} 
+ \begin{myindentpar}{\texttt{name}} is given by user and must be matched with that is mentioned in the syntax 
+ \hyperref[para:SetMaterialProperty]{\texttt{SetMaterialProperty}}.
+ \end{myindentpar} 
+ \texttt{varagin} 
+\begin{myindentpar} 
+  \textcolor{green}{Isotropy} :If it is set to be '0', then an anistropy object is defined. 
+\end{myindentpar} 
+
+
+\textcolor{blue}{\begin{large}\textbf{SetMaterialProperty}\end{large}}\\
+ \textcolor{blue}{\begin{large}Syntax:\end{large}}
+  \begin{lstlisting}
+ CSX = SetMaterialProperty(CSX, name, varargin)
+  \end{lstlisting}
+  \hyperref[para:CSX]{\texttt{CSX}} 
+ \begin{myindentpar}\hyperref[para:CSX]{\texttt{CSX}} describes here the object physical properties in .xml file.
+ \end{myindentpar} 
+ \texttt{name} 
+ \begin{myindentpar}{\texttt{name}} is given by user and must be matched with that is mentioned in the syntax 
+ \hyperref[para:AddMaterial]{\texttt{AddMaterial}}.
+ \end{myindentpar} 
+ \texttt{varargin}
+ \begin{myindentpar} Varargin is the argument has to be defined by user to specific the{\hyperref[para:Material Properties ]{\texttt{Material Properties }}}. 
+  \begin{itemize}
+  \item \textcolor{green}{Epsilon} :Relative permittivity [1 by default]
+   \item \textcolor{green}{Mue}     :Relative magnetic permeability[1 by default]
+  \item \textcolor{green}{Kappa}   :Electric conductivity[$\frac{S}{m}$]
+  \item \textcolor{green}{Sigma}   :Magnetic conductivity [$\frac{\Omega}{m}$]
+  \item \textcolor{green}{Density} :Material mass density[$\frac{Kg}{m^{3}}$] 
+  \end{itemize}
+ \end{myindentpar}
+
+
+\textcolor{blue}{\begin{large}\textbf{SetMaterialWeight}\end{large}}\\
+
+\textcolor{blue}{\begin{large}Syntax:\end{large}}
+
+  \begin{lstlisting}
+ CSX = SetMaterialWeight(CSX, name, varargin)
+  \end{lstlisting}
+  
+\textcolor{blue}{\begin{large}Description:\end{large}}\\
+It weights a material property with given weighting function by using the variables.
+ \hyperref[para:CSX]{\texttt{CSX}} 
+ \begin{myindentpar}\hyperref[para:CSX]{\texttt{CSX}} describes geometrical objects and their physical or non-physical properties in .xml file.
+ \end{myindentpar} 
+ \texttt{name} 
+ \begin{myindentpar}{\texttt{name}} is given by user and must be matched with that is mentioned in the syntax 
+ \hyperref[para:SetMaterialProperty]{\texttt{SetMaterialProperty}}.
+ \end{myindentpar} 
+ \texttt{varagin} The following variables can be used to define the weighting function:
+\begin{myindentpar} 
+  \begin{itemize}
+  \item \textcolor{green}{x},\textcolor{green}{y},\textcolor{green}{z} :the distance from x,y or z along its axis to the origin
+  \item \textcolor{green}{rho}       : ???
+  \item \textcolor{green}{r}         :the radial distance from point of interest to orign
+  \item \textcolor{green}{a}         :the polar angle as in cylindrical and spherical coordinate systems
+  \item \textcolor{green}{t}         :the azimuthal angle in spherical coordinate system 
+  \end{itemize}
+\end{myindentpar} 
+
+\textcolor{blue}{\begin{large}Examples:\end{large}}\\
+
+\begin{lstlisting}
+ CSX = AddMaterial( CSX, 'RO3003' );
+ CSX = SetMaterialProperty( CSX, 'RO3010', 'Epsilon', 3, 'Mue', 1 );
+\end{lstlisting}
+ 
+ The first syntax adds a dielectric material named Ro3003. It has relative permittivity of 3 and relative permeability of 1. If lossy dielectric is introduced, one can set \textcolor{green}{Kappa} ($\sigma$)to its correponding value with known lost tangent ($\delta$): \begin{equation}
+\sigma=2*pi*freq*\varepsilon*\tan(\delta)
+\end{equation} 
+\begin{lstlisting}
+ CSX = AddMaterial( CSX, 'RO3003' );
+ CSX = SetMaterialProperty( CSX, 'RO3010', 'Epsilon', 3,'Kappa',\sigma );
+\end{lstlisting}
+
+The following example shows anisotropic material property: 
+
+\begin{lstlisting} 
+  CSX = AddMaterial( CSX, 'sheet','Isotropy',0);
+  CSX = SetMaterialProperty(CSX, 'sheet', 'Kappa', [0 0 kappa]);
+\end{lstlisting}
+
+The anisotropic material named sheet has zero \textcolor{green}{Kappa} at x- and y- direction but values 'kappa' at z-direction, where 'kappa' is predefined. If cylindrical coordinate system has been used, then the material sheet has only value at z-direction but not at radial and azimuthal direction. 
+    
+\begin{lstlisting} 
+CSX = AddMaterial(CSX, 'abc');
+CSX = SetMaterialProperty(CSX, 'abc', 'Epsilon', 1);
+CSX = SetMaterialWeight(CSX, 'abc', 'Epsilon', ['(sin(4*z / 1000 *2*pi)>0)+1']);
+\end{lstlisting}
+
+A material named 'abc' has been added into CSX.Its relative permittivity has been weighted with function sin depends on its z-position. 
+
+\subsubsection{Metal}
+ \input{chapter/SEC_CSXCAD_Setup/properties_metal}
+ 
+\subsubsection{Discretized material definition} 
+\subsubsection{Dispersive Material}
+\subsubsection{LumpedElement}
+ 
+\subsection{non-Physical CSXProperties}
+\subsubsection{Discretized material definition} 
+\subsubsection{Dispersive Material}
+\subsubsection{LumpedElement}

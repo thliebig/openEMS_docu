@@ -1,0 +1,61 @@
+This section shows how a metal/PEC is introduced into CSX. 
+
+\textcolor{blue}{\begin{large}\textbf{AddMetal}\end{large}}\\
+\textcolor{blue}{\begin{large}Syntax:\end{large}}
+
+  \begin{lstlisting}
+ CSX = AddMetal(CSX, name)
+  \end{lstlisting}
+  
+\textcolor{blue}{\begin{large}Description:\end{large}}\\
+This function introduces perfect electric conductor of no loss into CSX.\\
+\hyperref[para:CSX]{\texttt{CSX}} 
+ \begin{myindentpar}\hyperref[para:CSX]{\texttt{CSX}} describes geometrical objects and their physical or non-physical properties in .xml file.
+ \end{myindentpar} 
+ \texttt{name} 
+ \begin{myindentpar}{\texttt{name}} is given by user and must be matched with that is mentioned in the syntax for defining CSXprimitives~\ref{CSXprimitives}.  
+ \end{myindentpar} 
+
+ If a lossy conducting material is preferred,then the following function is recommended:  
+ 
+\textcolor{blue}{\begin{large}\textbf{AddConductingSheet}\end{large}}\\
+
+\textcolor{blue}{\begin{large}Syntax:\end{large}}
+
+  \begin{lstlisting}
+CSX = AddConductingSheet(CSX, name, conductivity, thickness)
+  \end{lstlisting}
+  
+\textcolor{blue}{\begin{large}Description:\end{large}}\\ 
+\hyperref[para:CSX]{\texttt{CSX}} 
+ \begin{myindentpar}\hyperref[para:CSX]{\texttt{CSX}} describes geometrical objects and their physical or non-physical properties in .xml file.
+ \end{myindentpar} 
+ \texttt{name} 
+ \begin{myindentpar}{\texttt{name}} is given by user and must be matched with that is mentioned in the syntax for defining CSXprimitives\ref{CSXprimitives}.  
+ \end{myindentpar} 
+ \texttt{conductivity} 
+ \begin{myindentpar} It is given by user according to the conductivity of metal being used. The most frequent used metal is copper and its conductivity is 58e6$Sm^{-1}$.    
+ \end{myindentpar}
+ \texttt{thickness} 
+ \begin{myindentpar} it defines the thickness of metal sheet.     
+ \end{myindentpar}
+
+\textcolor{blue}{\begin{large}Examples:\end{large}}\\  
+
+\begin{lstlisting} 
+CSX = AddMetal(CSX,'metal'); 
+\end{lstlisting}
+
+This syntax adds PEC material into CSX with the name 'metal'. 
+
+\begin{lstlisting} 
+CSX = AddConductingSheet(CSX,'copper',56e6,70e-6);
+\end{lstlisting}
+
+This syntax adds a conducting sheet of 70$\mu$m into CSX. The assigned metal is named copper and has conductivity of 58e6$Sm^{-1}$.  
+
+ 
+ 
+ 
+ 
+ 

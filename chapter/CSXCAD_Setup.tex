@@ -1,9 +1,27 @@
 \chapter{CSXCAD Geometrical Setup}\label{chap-CSXCAD}
-	This is about the setup of properties and primitives using the CSXCAD interface
+	This chapter describes about the setup of properties and primitives of model using the \texttt{CSXCAD} interface. \texttt{CSXCAD} implies a C++ library to describe object geometries and their physical or non-physical properties in an open-source .xml format.  It provides a flexible and mesh-independent geometry definition and supports rectilinear mesh grid. OpenEMS gives absolute liberality to user in aspect of model geometry, by describing it with some specified functions in in Matlab platform (.m file). 
+ 
+\textcolor{blue}{\begin{large}\textbf{InitCSX}\end{large}}\\
+In order to initiate a structure description, one should firstly choose either a Cartesian or Cylindrical coordinate based mesh definition with function \hyperref[para:InitCSX]{\texttt{InitCSX}}.
 
-\section{Properties}\label{sect-Properties}
-Properties ...
+\textcolor{blue}{\begin{large}Syntax:\end{large}}
+ \begin{lstlisting}
+CSX =InitCSX();
+ \end{lstlisting}
+ 
+\textcolor{blue}{\begin{large}Description:\end{large}}\\
+\hyperref[para:CSX]{\texttt{CSX}}
+  \begin{myindentpar}\hyperref[para:CSX]{\texttt{CSX}} describes geometrical objects and their physical or non-physical properties in .xml file. This syntax defines a default cartesian mesh. If argument \textcolor{green} {'CoordSystem','1'} is added, the cylindrical mesh definition is set. 
+   \end{myindentpar} 
+   
+   
+\begin{lstlisting}
+CSX = InitCSX('CoordSystem','1');
+\end{lstlisting}
+ 
+   
 
-\section{Primitives}\label{sect-Primitives}
-Primitives ...
+\input{chapter/SEC_CSXCAD_Setup/properties} 
+
+\input{chapter/SEC_CSXCAD_Setup/primitives} \label{CSXprimitives} 
 
