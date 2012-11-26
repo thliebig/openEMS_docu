@@ -98,8 +98,52 @@ Visit \url{http://openEMS.de} how to contribute and enhance this User Manual.}}
 \usepackage{float}
 \usepackage{subfig}
 
-\newenvironment{myindentpar}% INDENT. 
-     {\begin{list}{}{\setlength{\leftmargin}{1cm}}%
+\usepackage{environ}% http://ctan.org/pkg/environ
+
+\newenvironment{myindentpar}[1][1em]% INDENT. 
+     { \begin{list}{}{\setlength{\leftmargin}{#1}}%
               \item[]% just blank 
      }
      {\end{list}}
+
+%%% for the font of the title of a function     
+\newenvironment{FontNameFunct}[1] % \begin{FontNameFunct}{functionname}  \end{FontNameFunct}
+{\begin{Large}\textcolor{black}{\texttt{\textbf{{#1}}}}}{\end{Large}}
+
+%%% the enviroment of  purpose,syntax, definetion, desctrition, example.... #1 is the name of title. 
+\newenvironment{FontDescr}[1]% \begin{FontDescr}{title} context \end{FontDescr}
+  {    \begin{myindentpar}%{1em}
+	\begin{large}\textcolor{black}{\textbf{{#1}}}\end{large}
+	\end{myindentpar}
+	\begin{myindentpar}[2em]
+  }
+  {
+	\end{myindentpar}
+  }
+
+%%% font of  matlab variables including links to the first definetion.
+\definecolor{varcol}{RGB}{0,127,255}
+\usepackage{ifthen}
+\newcommand{\matv}[2][\empty]    %% \matv[label]{parametername}.
+  {
+      \ifthenelse{\equal{#1}{\empty}}  % first optinal argument is the label that the variable refer to.  #2 is for the name of the variable. default #1 is para:#2. \matv{parametername}=\matv[para:parametername]{parametername}
+      {\hyperref[para:#2]{\textcolor{varcol}{\texttt{#2}}}}
+      {\hyperref[#1]{\textcolor{varcol}{\texttt{#2}}}}
+  }
+
+%%%  the enviroment of the title of parameter
+\newenvironment{FontPara}[1] % \begin{FontPara}{title} context \end{FontPara}
+  {  \par  \matv{#1}
+    \begin{myindentpar}%[3em]
+  }
+  {  \end{myindentpar}
+  }
+
+
+
+
+
+
+
+
+
