@@ -3,16 +3,18 @@
 \section{Initiation of \matv{FDTD}} \label{sec:FDTD_ATTRIBUTE}
 \phantomsection \label{para:FDTD_ATTRIBUTE}
 This section shows how to initiate the structure \matv{FDTD} with some given attributes.
-
+ 
 %%%%%%%%%%%%%%%%%%%%%%% FUNCTION  InitFDTD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-\begin{FontNameFunct}{InitFDTD}
+\begin{FontNameFunct}{InitFDTD()}
 \phantomsection \label{func:InitFDTD} 
 \end{FontNameFunct}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Purpose
 \begin{FontDescr}{Purpose:}
 Initialize the \matv{FDTD} data-structure.
 \end{FontDescr}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Syntax
 \begin{FontDescr}{Syntax:}
       \begin{lstlisting}
 FDTD = InitFDTD(NrTS,endCrit,varargin)
@@ -95,7 +97,7 @@ FDTD =InitFDTD('MultiGrid',mg_str(1:end-1),...
 	\end{FontDescr}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% RETURN VALUE
-
     %%%%%%%%%%%%%% warning
-	      \warning{ Please don't neglect the left expression '\matv{FDTD}' for the assignment, otherwise \matv{FDTD} will not be updated.}\\
+	      \warning{ Please don't neglect the left expression '\matv{FDTD}' for the assignment, otherwise \matv{FDTD} will not be updated.}
+
+% See also: \matv[func:InitCSX]{InitCSX}

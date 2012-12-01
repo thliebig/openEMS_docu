@@ -1,25 +1,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%section Excitation signal setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Excitation signal setup} \label{sec:FDTD_Excitation}
-An excitation  is a source of the  electric magnetic field. It can be  an electrical field intensity $\vec{E}$ or an magnetic field intensity $\vec{H}$. And  in OpenEMS, each excitation can be considered as a composition  of two parts -- a signal of  time or  frequency as well as  a distribution or an application in the space. The first part is called excitation signal here. And in Matlab it is defined as one field of the structure \hyperref[para:FDTD]{\texttt{FDTD}}, which is named as \texttt{Excitation}. \phantomsection \label{para:Excitation}\\%\hyperref[para:Excitation]{\texttt{Excitation}} 
+An excitation  is a source of the  electric magnetic field. It can be  simulated by an electrical field intensity $\vec{E}$ or a magnetic field intensity $\vec{H}$. In OpenEMS, each excitation can be considered as a composition  of two parts -- a signal of  time (or  frequency) as well as  a geometrical distribution  in the space. The first part is called excitation signal here.
+In Matlab this signal is defined as a field of the structure \matv{FDTD}, which is named as \matv{Excitation}. \phantomsection \label{para:Excitation}%\matv{Excitation}
 
-This section will show how to set up an \hyperref[para:Excitation]{\texttt{Excitation}} such as a Gaussian pulse, a sinusoidal signal or other customs excitation signals,\footnote{How to apply the \hyperref[para:Excitation]{\texttt{Excitation}}  to any given space(meshes or grids) is showed in the section \ref{sect-Primitives}.} with the following functions:
+This section will show how to set up  an \matv{Excitation} using different signal, such as a Gaussian pulse, a sinusoidal signal or other custom excitation signal\footnote{How to apply the \matv{Excitation}  to geometrical distribution in the space  is showed in the section \ref{sect-Primitives}.}:
        \begin{myindentpar}
-	      \hyperref[func:SetGaussExcite]{\texttt{SetGaussExcite(FDTD,f0,fc)}} \\ 
-	      \hyperref[func:SetSinusExcite]{\texttt{SetSinusExcite(FDTD,f0)}}\\ 
-	      \hyperref[func:SetCustomExcite]{\texttt{SetCustomExcite(FDTD,f0,funcStr)}}
+	     \ref{subsec:Gaussian pulse} \hspace{1cm} \hyperref[subsec:Gaussian pulse]{\textcolor{blue}{\underline{\texttt{FDTD=SetGaussExcite(FDTD,f0,fc)}}}}, \\
+	      \ref{subsec:Sinusoidal signal} \hspace{1cm} \hyperref[subsec:Sinusoidal signal]{\textcolor{blue}{\underline{\texttt{FDTD=SetSinusExcite(FDTD,f0)}}}},\\
+	      \ref{subsec:Other excitation signals} \hspace{1cm} \hyperref[subsec:Other excitation signals]{\textcolor{blue}{\underline{\texttt{FDTD=SetCustomExcite(FDTD,f0,funcStr)}}}}.
        \end{myindentpar}
-Note that Gaussian and sinusoidal excitatian are defined in frequency domain , since signals in time domain or frequency domain can be transformed into each other.   More Details are showed in the following subsections \ref{subsec:Gaussian pulse}, \ref{subsec:Sinousoidal signal} and \ref{subsec:Other excitation signals}\\
-Exact definetion of these excitation signals can be found in the source codes file: \textasciitilde/openems/openEMS/FDTD/excitation.cpp.\\
-\info{One  simulation has one excitation signal. 
-And if many excitation signals are involved in a case, superposition principle can be utilized to  attain the equivalent simulation.}
+Note that Gaussian and sinusoidal excitation can be  defined in frequency domain in the above functions, because signals in time domain or frequency domain can be transformed into each other.\\
+\info{One  simulation uses only one excitation signal.
+If many excitation signals are involved during a simulation, superposition principle can be utilized to  attain the equivalent simulation.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subsection Gaussian pulse %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \subsection{Gaussian pulse} \label{subsec:Gaussian pulse}
-If $f_0$ is a modulated frequency and $f_c$ is a bandwidth between  two cutoff frequencies $f_0-f_c/2$ and  $f_0+f_c/2$ at -5dB, then a time domain Gaussian signal (a pure Gaussian signal modulated by a co-sinusoidal signal)
+If $f_0$ is a modulated frequency and $f_c$ is a bandwidth  from   $f_0-0.5f_c$ to  $f_0+0.5f_c$ where the excitation amplitudes  are greater than $-5$dB, a time domain Gaussian signal (Indeed it's a pure Gaussian signal modulated by a co-sinusoidal signal. See fig. \ref{fig:GaussInpulseTheory})
 \begin{equation}\label{equ:GussianSignal_time}
  f(t)=cos[2\pi f_0(t-t_0)]e^{-{\big(\frac{t-t_0}{\frac{t0}{3}}\big)}^2}, \quad \text{for } t>0 \text{ and }t_0=\frac{9}{2\pi f_c}
 \end{equation}
-can be expressed  in frequency domain as
+can be transformed  into frequency domain as
 \begin{equation}\label{equ:GussianSignal_freq}
 F(f)=\frac{3}{4\sqrt{\pi}f_c}e^{-j\frac{9f}{f_c}}e^{-{\big(\frac{f-f_0}{\frac{2f_c}{3}}\big)}^2},\quad \text{for } f>0 .
 \end{equation}
@@ -28,153 +28,163 @@ Figure \ref{fig:GaussInpulseTheory} shows an instance of Gaussian pulse from exp
     \begin{figure}[hbt]
 	      \centering
 	      \subfloat[In time domain]{\includegraphics[width=0.48\textwidth]{svg/GaussPulseTime.eps}} 
-	      \subfloat[In frequency domain]{\includegraphics[width=0.48\textwidth]{svg/GaussPulseFreq.eps}}\\
-	      \subfloat[In dB]{\includegraphics[width=0.48\textwidth]{svg/GaussPulseFreqdB.eps}} 
-	      \caption[Gaussian pulse signal]{An instance of Gaussian pulse signal with $f_0=10GHz \quad f_c=6GHz$}
+	      \subfloat[In frequency domain]{\includegraphics[width=0.48\textwidth]{svg/GaussPulseFreq.eps}}
+	      \caption[Gaussian pulse signal]{An instance of Gaussian pulse signal with $f_0=340MHz \quad f_c=70GHz$}
 	      \label{fig:GaussInpulseTheory}
     \end{figure}
-According to the expression \ref{equ:GussianSignal_freq}, a Gaussian signal can be defined with function \hyperref[func:SetGaussExcite]{\texttt{SetGaussExcite(FDTD,f0,fc)}}.
+According to the expression \ref{equ:GussianSignal_freq}, a Gaussian signal can be defined using function \hyperref[func:SetGaussExcite]{\texttt{SetGaussExcite()}}.
 
 %%%%%%%%%%%%%%%%%%%%%%% FUNCTION  SetGaussExcite %%%%%%%%%%%%%%%%
-\textcolor{blue}{\begin{large}\textbf{SetGaussExcite}	\end{large}}\phantomsection \label{func:SetGaussExcite}\\
-	  Set a Gaussian function as the signal of the excitation.
+\begin{FontNameFunct}{SetGaussExcite()}
+\phantomsection \label{func:SetGaussExcite}
+\end{FontNameFunct}
 
-\textcolor{blue}{\begin{large}Syntax:\end{large}}
- \begin{lstlisting}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Purpose
+\begin{FontDescr}{Purpose:}
+ Set  Gaussian function (eq.\ref{equ:GussianSignal_freq}) as  signal of an excitation.  
+\end{FontDescr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Syntax	  
+\begin{FontDescr}{Syntax:}
+      \begin{lstlisting}
 FDTD = SetGaussExcite(FDTD,f0,fc)
- \end{lstlisting}
+      \end{lstlisting}
+\end{FontDescr}
 
-\textcolor{blue}{\begin{large}Definition:\end{large}}\\
-      This function update the structure \hyperref[para:FDTD]{\texttt{FDTD}} with the expression \ref{equ:GussianSignal_freq}. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Description
+\begin{FontDescr}{Description:}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%% f0
+    \begin{FontPara}{f0} \phantomsection \label{para:f0}
+   \matv{f0}  is the frequency of the modulating co-sinusoidal signal. It's also the central frequency of the Gaussian signal. With \matv{f0} the signal has the highest amplitude or energy.
+    \end{FontPara}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%% fc
+    \begin{FontPara}{fc} \phantomsection \label{para:fc}
+		\matv{fc} determines the variance of the signal. It is a  bandwidth of which center is at \matv{f0}. In the band [\matv{f0}-0.5\matv{fc} \quad \matv{f0}+0.5\matv{fc}] the amplitude  is greater than  $-5$dB (See fig. \ref{fig:GaussInpulseTheory}).
+% The maximal frequency which will be simulated is \matv{f0}+\matv{fc}.
+The broader \matv{fc} is, the less steep is the signal in frequency domain, but narrower  and steeper the signal is in time domain.
+    \end{FontPara} 
+\end{FontDescr}
 
-\textcolor{blue}{\begin{large}Description:\end{large}}\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
-	\hyperref[para:FDTD]{\texttt{FDTD}} 
-	    \begin{myindentpar}
-		A structure in MATLAB. See \hyperref[para:FDTD]{\texttt{FDTD}}.
-	    \end{myindentpar}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% f0
-	\texttt{f0}  \phantomsection \label{para:f0} %\hyperref[para:f0]{\texttt{f0}} 
-	    \begin{myindentpar}
-		\hyperref[para:f0]{\texttt{f0}}  is the frequency of the modulating co-sinusoidal signal. It's also the central frequency of the Gaussian signal. At this frequency the signal has the highest amplitude or energy. 
-	    \end{myindentpar}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% fc
-	\texttt{fc}  \phantomsection \label{para:fc} %\hyperref[para:fc]{\texttt{fc}} 
-	    \begin{myindentpar}
-		\hyperref[para:fc]{\texttt{fc}} determines the variance of the signal. It is a central bandwidth. In the band [\hyperref[para:f0]{\texttt{f0}}-\hyperref[para:fc]{\texttt{fc}}/2 \quad \hyperref[para:f0]{\texttt{f0}}+\hyperref[para:fc]{\texttt{fc}}/2] the signal is greater then about -5dB. See figure \ref{fig:GaussInpulseTheory}. And the maximal frequency to be simulated is \hyperref[para:f0]{\texttt{f0}}+\hyperref[para:fc]{\texttt{fc}}.The greater \hyperref[para:fc]{\texttt{fc}} is, the flater is the signal in frequency domain, but cliffier and shorter in time domain.
-	    \end{myindentpar}
-\warning{Too small \hyperref[para:fc]{\texttt{fc}} will lead to a time-consuming simulation. Too great \hyperref[para:fc]{\texttt{fc}} will lead to a signal in a very short time relative to a time step. Both cases should be advoided.}
+\warning{ Small \matv{fc} for narrow band will lead to a time-consuming simulation. Great \matv{fc} for broadband will lead to a  signal  in short time. }
 
-%%%%%%%%%%%%%%%%%%%%% Examples.	  
-	\textcolor{blue}{\begin{large}Examples:\end{large}}\\
-\begin{itemize}
-\item An Gaussian pulse with a central frequency \hyperref[para:f0]{\texttt{f0}}=0.5GHz, and a -5dB bandwidth of \hyperref[para:fc]{\texttt{fc}}=0.5GHz. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Examples
+\begin{FontDescr}{Examples:}
+ \begin{itemize}
+\item A Gaussian pulse with a central frequency \matv{f0}=$340$ MHz and a  bandwidth of \matv{fc}=$70$ MHz in which the amplitude is greater than $-5$ dB.
 \begin{lstlisting}
-% Initiation of FDTD 
+% Initiation of FDTD. Maximal number of time step is 5000. End criteria of energy is -50 dB.
 FDTD = InitFDTD(5000,1e-5,'OverSampling',10);
-% Update FDTD with a  Gaussian pulse excitation. 
-% f0=0.5GHz, fc=0.5GHz
-FDTD = SetGaussExcite(FDTD,0.5e9,0.5e9);
+% Update FDTD with a  Gaussian pulse excitation.
+% f0=340 MHz, fc=70 MHz
+FDTD = SetGaussExcite(FDTD,340e6,70e6);
 % The field  FDTD.Excitation.ATTRIBUTE  has been assigned.
 \end{lstlisting}
-Under this setting, a Gaussian pulse has been set up. And the signal reduces to -5dB at 0.25GHz and 0.75GHz. The maximal frequency in simulation is 1GHz.
+Under this setting, an excitation signal of Gaussian pulse has been set up. The signal reduces to $-5$ dB at $305$ MHz or $375$ MHz (to $-20$ dB at $270$ MHz or $410$ MHz).
 \end{itemize}
+\end{FontDescr}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subsection Sinousoidal signal %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection{Sinousoidal signal}\label{subsec:Sinousoidal signal}
-\textcolor{blue}{\begin{large}\textbf{SetSinusExcite}	\end{large}}\phantomsection \label{func:SetSinusExcite}\\
-	  Set a sinusoidal function as the signal of the excitation.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subsection Sinusoidal signal %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \subsection{Sinusoidal signal}\label{subsec:Sinusoidal signal}
+%%%%%%%%%%%%%%%%%%%%%%% FUNCTION  SetSinusExcite %%%%%%%%%%%%%%%%
+\begin{FontNameFunct}{SetSinusExcite()}
+\phantomsection \label{func:SetSinusExcite}
+\end{FontNameFunct}
 
-\textcolor{blue}{\begin{large}Syntax:\end{large}}
- \begin{lstlisting}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Purpose
+\begin{FontDescr}{Purpose:}
+ Set a sinusoidal function as the signal of an excitation.
+\end{FontDescr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Syntax
+\begin{FontDescr}{Syntax:}
+      \begin{lstlisting}
 FDTD = SetSinusExcite(FDTD,f0)
- \end{lstlisting}
+      \end{lstlisting}
+\end{FontDescr}
 
-\textcolor{blue}{\begin{large}Definition:\end{large}}\\
-      The signal in time domain has an form as following function\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Description
+\begin{FontDescr}{Description:}
+       The signal in time domain has a form as following function\\
 \begin{equation}\label{equ:SinusoidalSignal_time}
  f(t)=\sin{(2\pi f_0t)}, \text{ for } t>0
 \end{equation}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%% f0
+    \begin{FontPara}[para:sinf0]{f0} \phantomsection \label{para:sinf0}
+   \matv[para:sinf0]{f0}  is the unique frequency of the  sinusoidal signal.
+    \end{FontPara}
+\end{FontDescr}
 
-\textcolor{blue}{\begin{large}Description:\end{large}}\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
-	\hyperref[para:FDTD]{\texttt{FDTD}} 
-	    \begin{myindentpar}
-		A structure in MATLAB interface. See \hyperref[para:FDTD]{\texttt{FDTD}}.
-	    \end{myindentpar}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% f0
-	\texttt{f0}  \phantomsection \label{para:sin_f0} %\hyperref[para:sin_f0]{\texttt{f0}} 
-	    \begin{myindentpar}
-		\hyperref[para:sin_f0]{\texttt{f0}}  is the unique frequency of the homonic signal. 
-	    \end{myindentpar}
-
-%%%%%%%%%%%%%%%%%%%%% Examples.	  
-	\textcolor{blue}{\begin{large}Examples:\end{large}}\\
-\begin{itemize}
-\item A sinousoidal signal with a  frequency \hyperref[para:sin_f0]{\texttt{f0}}=0.5GHz. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Examples
+\begin{FontDescr}{Examples:}
+ \begin{itemize}
+\item A sinusoidal signal with a  frequency \matv[para:sinf0]{f0}=0.5 GHz.
 \begin{lstlisting}
-% Initiation of FDTD 
+% Initiation of FDTD
 FDTD = InitFDTD(5000,1e-5,'OverSampling',10);
 % Assignment for f0
 f0=0.5e9；
-% Update FDTD with a sinousoidal excitation. 
+% Update FDTD with a sinusoidal excitation.
 FDTD = SetSinusExcite(FDTD,f0);
-% The field  FDTD.Excitation.ATTRIBUTE
-% has been assigned.
+% The field  FDTD.Excitation.ATTRIBUTE has been assigned.
 \end{lstlisting}
-A sinousoidal excitation with frequency 0.5GHz has been set up in OpenEMS. 
+A sinusoidal excitation with frequency $0.5$ GHz has been set up for simulation in OpenEMS.
 \end{itemize}
+\end{FontDescr}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subsection excitation signals %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subsection Other excitation signals %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \subsection{Other excitation signals}\label{subsec:Other excitation signals}
-OpenEMS provides various kinds of excitation signals. Besides the Gaussian pulse and sinusoidal signal, it has also other forms of excitation, such as dirac function, step function and even custom function. Here is the introduction of how to set up an excitation with any custom function by using \hyperref[func:SetCustomExcite]{\texttt{SetCustomExcite}}.
+OpenEMS provides various kinds of excitation signals. Besides the Gaussian pulse and sinusoidal signal, it has other forms of signal, such as Dirac function, step function and even custom function. Here is the introduction of how to set up an excitation with any custom function by using \hyperref[func:SetCustomExcite]{\texttt{SetCustomExcite}}.
 
-\textcolor{blue}{\begin{large}\textbf{SetCustomExcite}	\end{large}}\phantomsection \label{func:SetCustomExcite}\\
-	  Set a custom function as the signal of the excitation.
+%%%%%%%%%%%%%%%%%%%%%%% FUNCTION  SetCustomExcite %%%%%%%%%%%%%%%%
+\begin{FontNameFunct}{SetCustomExcite()}
+\phantomsection \label{func:SetCustomExcite}
+\end{FontNameFunct}
+	  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Purpose
+\begin{FontDescr}{Purpose:}
+Set a custom function as the signal of the excitation.
+\end{FontDescr}
 
-\textcolor{blue}{\begin{large}Syntax:\end{large}}
- \begin{lstlisting}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Syntax
+\begin{FontDescr}{Syntax:}
+      \begin{lstlisting}
 FDTD = SetCustomExcite(FDTD,f0,funcStr)
- \end{lstlisting}
+      \end{lstlisting}
+\end{FontDescr}
+      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Description
+\begin{FontDescr}{Description:}
+       The signal in time domain is defined using a  custom function which is given in the form of a string \matv{funcStr}.
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%% f0
+    \begin{FontPara}[para:customf0]{f0} \phantomsection \label{para:customf0}
+   \matv[para:customf0]{f0}  is the nyquist rate.
+    \end{FontPara}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%% funcStr
+    \begin{FontPara}{funcStr} \phantomsection \label{para:funcStr}
+      \matv{funcStr}   is a string of an expression in MATLAB. This expression is of time \texttt{t}.  Two constants can be used directly in the expression, \texttt{e} for Euler's number and \texttt{pi} for $\pi$. Furthermore, any strings of defined variables can be used in the  string \matv{funcStr} for the expression of the signal.
+    \end{FontPara}
+\end{FontDescr}
 
-\textcolor{blue}{\begin{large}Definition:\end{large}}\\
-      The signal in time domain is a function like the given string \texttt{funcStr}.
-
-\textcolor{blue}{\begin{large}Description:\end{large}}\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD
-	\hyperref[para:FDTD]{\texttt{FDTD}} 
-	    \begin{myindentpar}
-		A structure in MATLAB. See \hyperref[para:FDTD]{\texttt{FDTD}}.
-	    \end{myindentpar}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% f0
-	\texttt{f0}  \phantomsection \label{para:custom_f0} %\hyperref[para:f0]{\texttt{f0}} 
-	    \begin{myindentpar}
-		\hyperref[para:f0]{\texttt{f0}}  is the nyquist rate. 
-	    \end{myindentpar}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% funcStr
-	\texttt{funcStr}  \phantomsection \label{para:custom_funcStr} %\hyperref[para:custom_funcStr]{\texttt{funcStr}} 
-	    \begin{myindentpar}
-		\hyperref[para:custom_funcStr]{\texttt{funcStr}}   is a string of an expression in MATLAB. This expression is of \texttt{t}, the time. It denotes how is the function of excitation.  And two constants can be used directly in the expression, \texttt{e} for Euler's number and \texttt{pi} for $\pi$. Futher more any strings of defined valuables can be used in \hyperref[para:custom_funcStr]{\texttt{funcStr}}.
-	    \end{myindentpar}
-
-%%%%%%%%%%%%%%%%%%%%% Examples.	  
-	    \textcolor{blue}{\begin{large}Examples:\end{large}}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Examples
+\begin{FontDescr}{Examples:}
     \begin{itemize}
-	\item A ramped sinus excite 
+	\item A ramped sinus excite
 	\begin{lstlisting}
-% Initiation of FDTD 
+% Initiation of FDTD
 FDTD = InitFDTD(5000,1e-5,'OverSampling',10);
 % The nyquist rate f0=1GHz
 f0=1e9;
 % Time step is of the nyquist rate f0
 T = 1/f0;
-% Update FDTD with a given string 
-% of an excitation expression of t. 
+% Update FDTD with a given string
+% of an excitation expression of t.
 FDTD = SetCustomExcite(FDTD,f0, ...
        [ '(1-exp(-1*(t/' num2str(T) ...
         ')^2) ) * sin(2*pi*'  ...
         num2str(f0) '*t)' ]);
-% The field  FDTD.Excitation.ATTRIBUTE 
+% The field  FDTD.Excitation.ATTRIBUTE
 % has  been assigned.
 	\end{lstlisting}
-    \end{itemize}
+\end{itemize}
+\end{FontDescr}
