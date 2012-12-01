@@ -106,9 +106,10 @@ Visit \url{http://openEMS.de} how to contribute and enhance this User Manual.}}
      }
      {\end{list}}
 
-%%% for the font of the title of a function     
+%%% for the font of the title of a function
+\definecolor{funcnamecol}{RGB}{200,0,0}
 \newenvironment{FontNameFunct}[1] % \begin{FontNameFunct}{function-name}  \end{FontNameFunct}
-{\begin{large}\textcolor{black}{\texttt{\textbf{{#1}}}}}{\end{large}}
+{\begin{Large}\textcolor{funcnamecol}{\texttt{\textbf{{#1}}}}}{\end{Large}}
 
 %%% the environment of  purpose,syntax, definition, description, example.... #1 is the name of title.
 \newenvironment{FontDescr}[1]% \begin{FontDescr}{title} context \end{FontDescr}
@@ -135,8 +136,8 @@ Visit \url{http://openEMS.de} how to contribute and enhance this User Manual.}}
 \newcommand{\matval}[1]{\textcolor{green}{\texttt{#1}}} % \matval{0} for Cartesian coordinates system.
 
 %%%  the environment of the title of parameter
-\newenvironment{FontPara}[1] % \begin{FontPara}{title} context \end{FontPara}
-  {  \par  \matv{#1}
+\newenvironment{FontPara}[2][\empty] % \begin{FontPara}[label]{title} context \end{FontPara}  . Default label is para:#2
+  {  \par  \matv[#1]{#2}
     \begin{myindentpar}%[3em]
   }
   {  \end{myindentpar}
