@@ -1,20 +1,26 @@
-\chapter{FDTD Parameter Setup}\label{chap:FDTD Parameter Setup}
-This is a chapter about the proper setup of all necessary FDTD parameter.\\
+\chapter{FDTD Parameters Setup}\label{chap:FDTD Parameter Setup}
+This is a chapter about  settings of  some parameters for FDTD. These parameters are about end criteria, excitations, boundary conditions, coordinates system, etc.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% FDTD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\texttt{FDTD}    is a structure in Matlab to describe some parameters of the algorithm FDTD for simulation with OpenEMS. It contains 3 fields: \phantomsection \label{para:FDTD} %\hyperref[para:FDTD]{\texttt{FDTD}}
-       \begin{myindentpar}
-	      \hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} \\ 
-	      \hyperref[para:Excitation]{\texttt{Excitation}}  \\ 
-	      \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}}
+All these parameter settings can be realized through  assignment statement to a structure variable \matv{FDTD} in Matlab by using some predefined functions.
+Structure \matv{FDTD} \phantomsection \label{para:FDTD}  includes 3 fields:  
+	      \matv{ATTRIBUTE},\phantomsection \label{para:ATTRIBUTE}
+	      \matv{Excitation},\phantomsection \label{para:Excitation}
+	      and \matv{BoundaryCond}\phantomsection \label{para:BoundaryCond}.
+
+%   \def\svgwidth{0.8\textwidth}
+%    \input{svg/FDTD_structure.eps_tex} % this file is from inkscape. saved as with option  omit text and in latex. it has been modified for links.
+% Some functions have been defined for user to  assign values to the parameters in \matv{FDTD}.
+The functions for setting  \matv{FDTD}  are about:
+      \begin{myindentpar}
+	     \ref{sec:FDTD_ATTRIBUTE} \hspace{1cm} \hyperref[sec:FDTD_ATTRIBUTE]{\textcolor{blue}{\underline{initiation of \texttt{FDTD}}}}, \\
+	      \ref{sec:FDTD_Excitation} \hspace{1cm} \hyperref[sec:FDTD_Excitation]{\textcolor{blue}{\underline{settings of  excitations}}},\\
+	      \ref{sec:BC} \hspace{1cm} \hyperref[sec:BC]{\textcolor{blue}{\underline{settings of boundary conditions}}}.
        \end{myindentpar}
-All fields and  their elements  are showed in the figure \ref{fig:Structure FDTD}
 
-
-  \def\svgwidth{0.8\textwidth}
-   \input{svg/FDTD_structure.eps_tex} % this file is from inkscape. saved as with option  omit text and in latex. it has been modified for links.
-
-Most of these parameters should be assigned with respective functions in MATLAB before a simulation is run in OpenEMS. And this process can be completed step by step. Firstly the structure \hyperref[para:FDTD]{\texttt{FDTD}} should be initiated(see section \ref{sec:FDTD_ATTRIBUTE}), then  \hyperref[para:Excitation]{\texttt{Excitation}} (see section \ref{sec:FDTD_Excitation}) and \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}} (see section \ref{sec:BC}) are set up in the structure.%\hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} has other advanced  parameters of \hyperref[para:FDTD]{\texttt{FDTD}}, such as the type of the coordinates system,  criteria for ending the simulation and so on.
+% EC_FDTD_CYL_THORSTEN\end{myindentpar}
+% Most of these parameters should be assigned with respective functions in MATLAB before a simulation is run in OpenEMS. And this process can be completed step by step. Firstly the structure \hyperref[para:FDTD]{\texttt{FDTD}} should be initiated, then  \hyperref[para:Excitation]{\texttt{Excitation}}  and \hyperref[para:BoundaryCond]{\texttt{BoundaryCond}} (see section \ref{sec:BC}) are set up in the structure.%\hyperref[para:FDTD_ATTRIBUTE]{\texttt{ATTRIBUTE}} has other advanced  parameters of \hyperref[para:FDTD]{\texttt{FDTD}}, such as the type of the coordinates system,  criteria for ending the simulation and so on.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%section Attributes of FDTD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,8 +28,8 @@ Most of these parameters should be assigned with respective functions in MATLAB 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%section Excitation signal setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{chapter/SEC_of_FDTD_Setup/Excitation} 
+\input{chapter/SEC_of_FDTD_Setup/Excitation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%section Boundary Conditions%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{chapter/SEC_of_FDTD_Setup/Boundary} 
+\input{chapter/SEC_of_FDTD_Setup/Boundary}

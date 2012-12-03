@@ -98,8 +98,48 @@ Visit \url{http://openEMS.de} how to contribute and enhance this User Manual.}}
 \usepackage{float}
 \usepackage{subfig}
 
-\newenvironment{myindentpar}% INDENT. 
-     {\begin{list}{}{\setlength{\leftmargin}{1cm}}%
+\usepackage{environ}% http://ctan.org/pkg/environ
+
+\newenvironment{myindentpar}[1][1em]% INDENT. 
+     { \begin{list}{}{\setlength{\leftmargin}{#1}}%
               \item[]% just blank 
      }
      {\end{list}}
+
+%%% for the font of the title of a function
+\definecolor{funcnamecol}{RGB}{200,0,0}
+\newenvironment{FontNameFunct}[1] % \begin{FontNameFunct}{function-name}  \end{FontNameFunct}
+{\begin{Large}\textcolor{funcnamecol}{\texttt{\textbf{{#1}}}}}{\end{Large}}
+
+%%% the environment of  purpose,syntax, definition, description, example.... #1 is the name of title.
+\newenvironment{FontDescr}[1]% \begin{FontDescr}{title} context \end{FontDescr}
+  {    \begin{myindentpar}%{1em}
+	\begin{normalsize}\textcolor{black}{\textbf{{#1}}}\end{normalsize}
+	\end{myindentpar}
+	\begin{myindentpar}[2em]
+  }
+  {
+	\end{myindentpar}
+  }
+
+%%% font of  matlab variables including links to the first definition.
+\definecolor{varcol}{RGB}{0,127,255}
+\usepackage{ifthen}
+\newcommand{\matv}[2][\empty]    %% \matv[label]{parameter-name}.
+  {
+      \ifthenelse{\equal{#1}{\empty}}  % first optional argument is the label that the variable refer to.  #2 is for the name of the variable. default #1 is para:#2. \matv{paramete-rname}=\matv[para:parameter-name]{parameter-name}
+      {\hyperref[para:#2]{\textcolor{varcol}{\texttt{#2}}}}
+      {\hyperref[#1]{\textcolor{varcol}{\texttt{#2}}}}
+}
+
+%%% font of the possible values that can be assigned to the arguments of a function in matlab values
+\newcommand{\matval}[1]{\textcolor{green}{\texttt{#1}}} % \matval{0} for Cartesian coordinates system.
+
+%%%  the environment of the title of parameter
+\newenvironment{FontPara}[2][\empty] % \begin{FontPara}[label]{title} context \end{FontPara}  . Default label is para:#2
+  {  \par  \matv[#1]{#2}
+    \begin{myindentpar}%[3em]
+  }
+  {  \end{myindentpar}
+  }
+
